@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/huichen/kunlun/internal/ngram_index"
-
 	"github.com/huichen/kunlun/pkg/types"
 )
 

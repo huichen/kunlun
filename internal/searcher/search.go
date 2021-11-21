@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/huichen/kunlun/internal/indexer"
-
 	"github.com/huichen/kunlun/pkg/log"
 	"github.com/huichen/kunlun/pkg/types"
 )

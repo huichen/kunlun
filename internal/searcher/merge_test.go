@@ -7,7 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/huichen/kunlun/internal/query"
-
 	"github.com/huichen/kunlun/pkg/types"
 )
 

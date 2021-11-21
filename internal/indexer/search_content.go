@@ -4,7 +4,6 @@ import (
 	"sort"
 
 	"github.com/huichen/kunlun/internal/ngram_index"
-
 	"github.com/huichen/kunlun/pkg/types"
 )
 

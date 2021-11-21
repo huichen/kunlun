@@ -2,7 +2,6 @@ package kls
 
 import (
 	"github.com/huichen/kunlun/internal/searcher"
-
 	"github.com/huichen/kunlun/pkg/types"
 )
 

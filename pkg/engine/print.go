@@ -8,7 +8,6 @@ import (
 	"github.com/fatih/color"
 
 	"github.com/huichen/kunlun/internal/ngram_index"
-
 	"github.com/huichen/kunlun/pkg/types"
 )
 

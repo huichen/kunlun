@@ -5,7 +5,6 @@ import (
 
 	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/internal/query"
-
 	"github.com/huichen/kunlun/pkg/types"
 )
 

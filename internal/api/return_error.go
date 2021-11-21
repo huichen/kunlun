@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/huichen/kunlun/api/rest"
-
 	"github.com/huichen/kunlun/pkg/log"
 )
 

@@ -2,7 +2,6 @@ package engine
 
 import (
 	"github.com/huichen/kunlun/internal/walker"
-
 	"github.com/huichen/kunlun/pkg/log"
 )
 

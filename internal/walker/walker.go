@@ -4,12 +4,11 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/huichen/kunlun/internal/ctags"
+	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 
+	"github.com/huichen/kunlun/internal/ctags"
 	"github.com/huichen/kunlun/pkg/log"
 	"github.com/huichen/kunlun/pkg/types"
-
-	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 )
 
 var (

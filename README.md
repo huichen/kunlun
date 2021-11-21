@@ -16,7 +16,7 @@
 # 安装/更新
 
 ```
-go get -u -v github.com/huichen/kunlun
+go get github.com/huichen/kunlun@latest
 ```
 
 # 使用

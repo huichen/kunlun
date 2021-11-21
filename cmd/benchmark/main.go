@@ -9,7 +9,6 @@ import (
 
 	"github.com/huichen/kunlun/internal/searcher"
 	"github.com/huichen/kunlun/internal/util"
-
 	"github.com/huichen/kunlun/pkg/engine"
 	"github.com/huichen/kunlun/pkg/log"
 	"github.com/huichen/kunlun/pkg/types"
