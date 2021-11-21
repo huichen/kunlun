@@ -3,7 +3,7 @@
 
 * 提供了 [KWS](/cmd/kws) 网页搜索界面
 * 提供了 [KLS](/cmd/kls)，一个命令行界面的代码搜索瑞士军刀程序
-* 采用对商业应用友好的[Apache License v2](/LICENSE)发布
+* 采用对商业应用友好的 [Apache License v2] (/LICENSE)发布
 
 # 安装/更新
 
