@@ -31,6 +31,8 @@ func main() {
 
 	// 初始化 kunlun engine
 	engine.Init()
+
+	// 启动索引创建线程
 	go buildIndex()
 
 	// 捕获ctrl-c
@@ -55,6 +57,7 @@ func main() {
 	// 静态页面
 	m.Handle("/", http.FileServer(http.Dir(*staticFolder)))
 
+	// 开启调试接口
 	if *useDebugHandles {
 		m.HandleFunc("/debug/pprof/", pprof.Index)
 		m.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)

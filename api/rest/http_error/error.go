@@ -13,6 +13,7 @@ const (
 	ErrDuplicateRecord      = 5
 )
 
+// 这里包含一些预定义的错误码和提示信息
 var (
 	GenericServerError = rest.ResponseBase{
 		Code:    ErrGenericServerError,
