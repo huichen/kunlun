@@ -5,6 +5,9 @@ type SearchResponse struct {
 	// 搜索得到的仓库
 	Repos []*SearchedRepo
 
+	// 搜索得到的语言
+	Languages []SearchedLanguage
+
 	// 总共检索到多少仓库，召回的总数量，包括因分页等截断的
 	NumRepos int
 
@@ -25,6 +28,26 @@ type SearchResponse struct {
 
 	// 召回耗时（不包含排序等），微秒
 	RecallDurationInMicroSeconds int64
+
+	// 返回类型
+	// repos: 仓库搜索
+	// files: 文件名搜索
+	// documents: 文档搜索
+	ResponseType string
+}
+
+type SearchedLanguage struct {
+	// 语言 ID
+	LanguageID uint64
+
+	// 语言名称
+	Name string
+
+	// 该语言返回了多少文档
+	NumDocumentsInLanguage int
+
+	// 该语言返回多少片段
+	NumSectionsInLanguage int
 }
 
 type SearchedRepo struct {

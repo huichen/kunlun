@@ -7,14 +7,23 @@ package rest
 type SearchResponse struct {
 	ResponseBase
 
-	Repos                        []Repo `json:"repos,omitempty"`
-	NumRepos                     int    `json:"numRepos"`
-	NumDocuments                 int    `json:"numDocuments"`
-	NumLines                     int    `json:"numLines"`
-	NumSections                  int    `json:"numSections"`
-	NumRegexMatches              int    `json:"numRegexMatches"`
-	SearchDurationInMicroSeconds int64  `json:"searchDurationInMicroSeconds"`
-	RecallDurationInMicroSeconds int64  `json:"recallDurationInMicroSeconds"`
+	Repos                        []Repo     `json:"repos,omitempty"`
+	Languages                    []Language `json:"language,omitempty"`
+	NumRepos                     int        `json:"numRepos"`
+	NumDocuments                 int        `json:"numDocuments"`
+	NumLines                     int        `json:"numLines"`
+	NumSections                  int        `json:"numSections"`
+	NumRegexMatches              int        `json:"numRegexMatches"`
+	SearchDurationInMicroSeconds int64      `json:"searchDurationInMicroSeconds"`
+	RecallDurationInMicroSeconds int64      `json:"recallDurationInMicroSeconds"`
+	Responsetype                 string     `json:"responseType"`
+}
+
+type Language struct {
+	LanguageID             uint64 `json:"languageID"`
+	Name                   string `json:"name"`
+	NumDocumentsInLanguage int    `json:"numDocumentsInLanguage"`
+	NumSectionsInLanguage  int    `json:"numSectionsInLanguage"`
 }
 
 type Repo struct {

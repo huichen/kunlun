@@ -22,6 +22,7 @@ func annotateResponse(context *Context, idxr *indexer.Indexer, request types.Sea
 	if err != nil {
 		return nil, err
 	}
+	response.ResponseType = "documents"
 	if err := context.checkTimeout(); err != nil {
 		return nil, err
 	}

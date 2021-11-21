@@ -32,6 +32,7 @@ func (schr *Searcher) searchFiles(context *Context, idxr *indexer.Indexer, reque
 	if err != nil {
 		return nil, err
 	}
+	response.ResponseType = "files"
 	if err := context.checkTimeout(); err != nil {
 		return nil, err
 	}

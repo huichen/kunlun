@@ -36,6 +36,7 @@ func (schr *Searcher) searchRepos(context *Context) (*types.SearchResponse, erro
 		Repos:                        outputRepos,
 		NumRepos:                     len(outputRepos),
 		SearchDurationInMicroSeconds: time.Since(*context.searchStartTime).Microseconds(),
+		ResponseType:                 "repos",
 	}
 
 	// 对结果排序

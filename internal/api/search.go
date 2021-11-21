@@ -109,7 +109,19 @@ func Search(w http.ResponseWriter, req *http.Request) {
 		NumRegexMatches:              sr.NumRegexMatches,
 		SearchDurationInMicroSeconds: sr.SearchDurationInMicroSeconds,
 		RecallDurationInMicroSeconds: sr.RecallDurationInMicroSeconds,
+		Responsetype:                 sr.ResponseType,
 	}
+	// 添加 language
+	languages := []rest.Language{}
+	for _, lang := range sr.Languages {
+		languages = append(languages, rest.Language{
+			LanguageID:             lang.LanguageID,
+			Name:                   lang.Name,
+			NumDocumentsInLanguage: lang.NumDocumentsInLanguage,
+			NumSectionsInLanguage:  lang.NumSectionsInLanguage,
+		})
+	}
+	response.Languages = languages
 	// 添加 repos 和 documents
 	for _, repo := range sr.Repos {
 		repoResponse := rest.Repo{
