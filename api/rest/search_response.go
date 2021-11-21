@@ -8,7 +8,7 @@ type SearchResponse struct {
 	ResponseBase
 
 	Repos                        []Repo     `json:"repos,omitempty"`
-	Languages                    []Language `json:"language,omitempty"`
+	Languages                    []Language `json:"languages,omitempty"`
 	NumRepos                     int        `json:"numRepos"`
 	NumDocuments                 int        `json:"numDocuments"`
 	NumLines                     int        `json:"numLines"`

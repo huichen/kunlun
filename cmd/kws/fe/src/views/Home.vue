@@ -163,8 +163,49 @@
             </div>
           </div>
 
+          <!-- 语言列表 -->
+          <div
+            v-if="
+              searchType == 'documents' && langs != null && langs.length > 0
+            "
+          >
+            <div class="files-list-title">语言列表</div>
+            <div class="files-list">
+              <div
+                class="file-list-item"
+                v-for="lang in langs"
+                :key="lang.languageID"
+              >
+                <div v-if="lang.name != ''">
+                  <a
+                    href="#"
+                    @click="
+                      hasLang(lang.name)
+                        ? removeLang(lang.name)
+                        : addLang(lang.name)
+                    "
+                  >
+                    <font-awesome-icon
+                      v-if="!hasLang(lang.name)"
+                      icon="plus"
+                    ></font-awesome-icon>
+                    <font-awesome-icon
+                      v-if="hasLang(lang.name)"
+                      icon="minus"
+                    ></font-awesome-icon>
+                    {{
+                      lang.name + " (" + lang.numDocumentsInLanguage + ")"
+                    }}</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- 文件列表 -->
-          <div v-if="files != null && files.length > 0">
+          <div
+            v-if="searchType == 'files' && files != null && files.length > 0"
+          >
             <div class="files-list-title">文件列表</div>
             <div class="files-list">
               <div
@@ -338,6 +379,8 @@ export default {
       message: "",
       showContent: false,
       hasLine: false,
+      searchType: "",
+      langs: [],
     };
   },
 
@@ -430,9 +473,20 @@ export default {
       this.clickSearchButton(0, 0, 0, 0);
     },
 
+    hasLang(lang) {
+      return this.query.includes("lang:^" + lang + "$");
+    },
+
     addLang(lang) {
-      if (!this.query.includes("lang:" + lang)) {
-        this.query = this.query + " lang:" + lang;
+      if (!this.hasLang(lang)) {
+        this.query = this.query + " lang:^" + lang + "$";
+      }
+      this.clickSearchButton(0, 0, 0, 0);
+    },
+
+    removeLang(lang) {
+      if (this.hasLang(lang)) {
+        this.query = this.query.replaceAll("lang:^" + lang + "$", "").trim();
       }
       this.clickSearchButton(0, 0, 0, 0);
     },
@@ -497,6 +551,10 @@ export default {
         if (response.data.code == 0) {
           if (this.docID == 0) {
             this.repos = response.data.repos;
+            this.searchType = response.data.responseType;
+
+            this.langs = response.data.languages;
+
             this.addLineSeperator(this.repos);
 
             // 文件列表
