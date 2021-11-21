@@ -3,7 +3,7 @@
 
 KLS 提供了一个命令行界面的代码搜索瑞士军刀程序，方便你在本地终端或者 SSH 中快速搜索代码
 
-![](https://raw.github.com/huichen/kunlun/master/doc/kls.png)
+![](https://github.com/huichen/kunlun/blob/master/doc/kls.png)
 
 
 #### 如何使用
