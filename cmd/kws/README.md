@@ -1,7 +1,7 @@
 昆仑代码网页搜索（Kunlun Web Search）
 =======
 
-KWS 提供了一个代码搜索的 Web 服务，方便你和你的团队通过网页界面做代码查询和浏览。
+KWS 提供了一个代码搜索的 Web 服务，方便通过网页界面做代码查询和浏览。
 
 ![](https://github.com/huichen/kunlun/blob/master/doc/kws.png)
 
