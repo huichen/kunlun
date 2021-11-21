@@ -1,20 +1,20 @@
-### 昆仑支持的搜索语言
+### 搜索表达式样例
 
 **cpu**
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜包含 "cpu" 的文档
 
-**"CPU cache"**
+**"cpu cache"**
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜包含短语 "CPU cache" 的文档
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜包含短语 "cpu cache" 的文档
 
-**cpu.\*name**
+**cpu.\*cache**
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜匹配正则表达式 "cpu.*name" 的文档
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜匹配正则表达式 "cpu.*cache" 的文档
 
-**"cpu\d{3} name"**
+**"cpu\d{2} cache"**
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜匹配正则表达式 "cpu\d{3} name" 的文档
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜匹配正则表达式 "cpu\d{2} cache" 的文档
 
 **cpu cache**
 
@@ -50,7 +50,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;等价于搜 (cpu AND cache) OR (hit AND miss)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 优先级高于 AND 高于 OR，可以用这三个操作符加括号组合任意深度的表达式
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"-" 操作符优先级高于 AND 高于 OR，可以用这三个操作符加括号组合任意深度的表达式
 
 **CPU cache.\*name case:yes**
 

@@ -10,7 +10,8 @@
 3.  基于文件尺寸过滤
 4.  基于文件行数过滤
 5.  文件夹过滤
-6.  ...
+6.  仓库过滤
+7.  ...
 
 具体可以参考 [IndexWalkerOptions 选项](https://github.com/huichen/kunlun/blob/master/pkg/types/walker_options.go) 中的注释，请根据你的实际需求组合这些选项达到最优的检索效果。
 
