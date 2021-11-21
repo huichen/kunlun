@@ -1,13 +1,13 @@
 昆仑代码搜索引擎
 ======
 
-* 支持亿行代码级别、多仓库、复杂表达式高速检索和实时查询
-* 超快的建索引速度：基于 [Unicode 三元组（trigram）的内存索引](/doc/index.md)，每分钟索引超过 1000 万行代码
-* 超快的搜索速度：多数检索表达式可在百毫秒内返回结果，[针对正则表达式检索做了优化](/doc/regexp.md)，速度可以达到 zoekt 的 [10 倍左右](/doc/benchmark.md)
+* 支持亿行级别代码、多仓库、复杂表达式高速检索和实时查询
+* 超快的建索引速度：基于 [Unicode 三元组（trigram）的内存索引](/doc/index.md)，每分钟可索引超过 1000 万行代码
+* 超快的搜索速度：多数 query 百毫秒内返回，[优化了正则表达式查询](/doc/regexp.md)，和竞品相比有 [10 倍速度提升](/doc/benchmark.md)
 * 支持丰富的[搜索语言](/doc/query.md)，可以基于正则表达式、与或非逻辑运算、文件名检索、语言、仓库名等搜索
-* 支持上百种编程语言[检测和查询](/doc/language.md)
-* 支持丰富的[索引文件过滤选项](/doc/index_filter.md)
-* 支持基于 ctags 的[变量、函数、类名等查询](/doc/ctags.md)
+* 支持多种编程语言的[检测和查询](/doc/language.md)
+* 支持一系列[索引文件过滤选项](/doc/index_filter.md)
+* 支持基于 ctags 的[符号（变量、函数、类名等）查询](/doc/ctags.md)
 * 支持可扩展的[访问权限控制](/doc/acl.md)
 * 提供了 [KWS](/cmd/kws) 网页搜索界面
 * 提供了 [KLS](/cmd/kls) 命令行界面的代码搜索瑞士军刀程序
@@ -29,8 +29,8 @@ package main
 import (
 	"flag"
 
-	"kunlun/pkg/engine"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (
@@ -60,7 +60,7 @@ func main() {
 }
 ```
 
-引擎提供了丰富的[文件遍历选项](/pkg/types/walker_options.go)、[索引选项](/pkg/types/indexer_options.go)和[搜索选项](/pkg/types/searcher_options.go)，可以在引擎启动时通过[参数传入](/pkg/types/engine_options.go)。
+引擎提供了一系列[文件遍历选项](/pkg/types/walker_options.go)、[索引选项](/pkg/types/indexer_options.go)和[搜索选项](/pkg/types/searcher_options.go)，可以在引擎启动时通过[参数传入](/pkg/types/engine_options.go)。
 
 如果你想阅读昆仑的代码，可以先看看[这篇文档](/doc/codebase.md)。
 
