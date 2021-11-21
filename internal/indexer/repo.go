@@ -1,0 +1,70 @@
+package indexer
+
+import (
+	"errors"
+	"fmt"
+
+	"kunlun/pkg/types"
+)
+
+type CodeRepository struct {
+	// 自增 ID
+	ID uint64
+
+	// 仓库在操作系统的路径，不包括结尾的 /
+	LocalPath string
+
+	// 仓库的远程路径
+	RemoteURL string
+}
+
+// 将代码仓库添加到索引
+func (indexer *Indexer) IndexRepo(info types.IndexRepoInfo) error {
+	indexer.indexerLock.Lock()
+	defer indexer.indexerLock.Unlock()
+
+	localPath := info.RepoLocalPath
+	remoteURL := info.RepoRemoteURL
+
+	if localPath == "" && remoteURL == "" {
+		return errors.New("代码仓库 LocalPath 和 RemoteURL 不能都为空")
+	}
+
+	if _, ok := indexer.localPathToRepoMap[localPath]; ok {
+		return fmt.Errorf("代码仓库 %s 已经存在，请勿重复添加", localPath)
+	}
+
+	// 更新 repo 计数
+	indexer.repoCounter++
+
+	repo := &CodeRepository{
+		ID:        indexer.repoCounter,
+		LocalPath: localPath,
+		RemoteURL: remoteURL,
+	}
+
+	if localPath != "" {
+		indexer.localPathToRepoMap[localPath] = repo
+	}
+	if remoteURL != "" {
+		indexer.remoteURLToRepoMap[remoteURL] = repo
+	}
+	indexer.idToRepoMap[indexer.repoCounter] = repo
+
+	return nil
+}
+
+// 先返回 remote URL，如果为空则返回 local path
+func (indexer *Indexer) GetRepoNameFromID(repoID uint64) string {
+	indexer.indexerLock.RLock()
+	defer indexer.indexerLock.RUnlock()
+
+	if repo, ok := indexer.idToRepoMap[repoID]; ok {
+		if repo.RemoteURL != "" {
+			return repo.RemoteURL
+		}
+		return repo.LocalPath
+	}
+
+	return ""
+}
