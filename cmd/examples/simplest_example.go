@@ -17,10 +17,10 @@ func main() {
 
 	// 创建引擎
 	kgn, _ := engine.NewKunlunEngine(nil) // 使用默认选项
-	kgn.Finish()                          // 开始搜索前必须先调用该函数
 
 	// 构建索引
 	kgn.IndexDir(*dir)
+	kgn.Finish() // 开始搜索前必须先调用该函数
 
 	// 检索
 	request := types.SearchRequest{

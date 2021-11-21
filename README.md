@@ -2,8 +2,8 @@
 ======
 
 * 提供了 [KWS](/cmd/kws) 网页搜索界面
-* 提供了 [KLS](/cmd/kls)，一个命令行界面的代码搜索瑞士军刀程序
-* 采用对商业应用友好的 [Apache License v2] (/LICENSE)发布
+* 提供了 [KLS](/cmd/kls) 命令行界面的代码搜索瑞士军刀程序
+* 采用对商业应用友好的 [Apache License v2](/LICENSE) 发布
 
 # 安装/更新
 
@@ -20,7 +20,6 @@ package main
 
 import (
 	"flag"
-	"log"
 
 	"kunlun/pkg/engine"
 	"kunlun/pkg/types"
@@ -36,10 +35,10 @@ func main() {
 
 	// 创建引擎
 	kgn, _ := engine.NewKunlunEngine(nil) // 使用默认选项
-	kgn.Finish()                          // 开始搜索前必须先调用该函数
 
 	// 构建索引
 	kgn.IndexDir(*dir)
+	kgn.Finish() // 开始搜索前必须先调用该函数
 
 	// 检索
 	request := types.SearchRequest{
@@ -53,7 +52,7 @@ func main() {
 }
 ```
 
-是不是很简单！
+引擎提供了丰富的遍历、索引和搜索[选项](/pkg/types/engine_options.go)。
 
 
 # 其它
