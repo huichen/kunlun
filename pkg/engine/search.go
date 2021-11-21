@@ -2,7 +2,8 @@ package engine
 
 import (
 	"errors"
-	"kunlun/pkg/types"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func (engine *KunlunEngine) Search(request types.SearchRequest) (*types.SearchResponse, error) {

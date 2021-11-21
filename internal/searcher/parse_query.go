@@ -3,8 +3,9 @@ package searcher
 import (
 	"regexp"
 
-	"kunlun/internal/query"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/query"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func ParseQuery(pattern string) (*SearchQuery, error) {

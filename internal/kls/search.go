@@ -1,8 +1,9 @@
 package kls
 
 import (
-	"kunlun/internal/searcher"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/searcher"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 const (

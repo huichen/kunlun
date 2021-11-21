@@ -1,4 +1,4 @@
-module kunlun
+module github.com/huichen/kunlun
 
 go 1.16
 

@@ -7,7 +7,7 @@ import (
 
 	"github.com/kr/pretty"
 
-	"kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/engine"
 )
 
 func PrintIndexerStats(kgn *engine.KunlunEngine) {

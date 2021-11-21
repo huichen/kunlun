@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 type CodeRepository struct {

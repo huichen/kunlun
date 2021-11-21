@@ -1,6 +1,6 @@
 package searcher
 
-import "kunlun/pkg/types"
+import "github.com/huichen/kunlun/pkg/types"
 
 // 根据输入参数对返回的仓库做分页截断
 func paginateRepos(context *Context, response *types.SearchResponse) {

@@ -3,7 +3,7 @@ package searcher
 import (
 	"errors"
 
-	"kunlun/internal/query"
+	"github.com/huichen/kunlun/internal/query"
 )
 
 // 试图对树中的一个正则表达式做软计算优化

@@ -5,8 +5,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"kunlun/internal/ngram_index"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/ngram_index"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func TestSearchUtils(t *testing.T) {

@@ -1,6 +1,6 @@
 package searcher
 
-import "kunlun/internal/query"
+import "github.com/huichen/kunlun/internal/query"
 
 func (schr *Searcher) searchTokenQuery(context *Context, q *query.Query) error {
 	if q == nil {

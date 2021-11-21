@@ -1,8 +1,9 @@
 package engine
 
 import (
-	"kunlun/internal/walker"
-	"kunlun/pkg/log"
+	"github.com/huichen/kunlun/internal/walker"
+
+	"github.com/huichen/kunlun/pkg/log"
 )
 
 // 将 dir 下各级目录的 git 仓库 pull 更新

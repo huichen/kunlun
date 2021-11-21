@@ -3,7 +3,7 @@ package searcher
 import (
 	"sync"
 
-	"kunlun/internal/indexer"
+	"github.com/huichen/kunlun/internal/indexer"
 )
 
 // 文档过滤器

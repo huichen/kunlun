@@ -1,8 +1,9 @@
 package searcher
 
 import (
-	"kunlun/internal/indexer"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 给搜索结果的文档添加文本内容

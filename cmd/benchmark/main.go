@@ -7,11 +7,12 @@ import (
 	"runtime/pprof"
 	"time"
 
-	"kunlun/internal/searcher"
-	"kunlun/internal/util"
-	"kunlun/pkg/engine"
-	"kunlun/pkg/log"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/searcher"
+	"github.com/huichen/kunlun/internal/util"
+
+	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

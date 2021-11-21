@@ -3,7 +3,7 @@ package indexer
 import (
 	"errors"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 type DocumentWithLines struct {

@@ -1,6 +1,6 @@
 package walker
 
-import "kunlun/pkg/types"
+import "github.com/huichen/kunlun/pkg/types"
 
 type WalkerFileInfo struct {
 	// 返回是否是代码仓库，如果为否则为文件

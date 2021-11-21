@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func TestSearch(t *testing.T) {

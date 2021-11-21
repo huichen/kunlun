@@ -3,7 +3,7 @@ package indexer
 import (
 	"errors"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 将多个 sections 做区间合并，比如

@@ -4,8 +4,9 @@ import (
 	"errors"
 	"time"
 
-	"kunlun/internal/indexer"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func (schr *Searcher) searchRepos(context *Context) (*types.SearchResponse, error) {

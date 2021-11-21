@@ -1,5 +1,3 @@
-// KLS：Kunlun Search
-// 命令行代码搜索工具
 package main
 
 import (
@@ -8,8 +6,8 @@ import (
 
 	flag "github.com/spf13/pflag"
 
-	"kunlun/internal/kls"
-	"kunlun/pkg/log"
+	"github.com/huichen/kunlun/internal/kls"
+	"github.com/huichen/kunlun/pkg/log"
 )
 
 var (

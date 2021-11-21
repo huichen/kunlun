@@ -6,10 +6,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"kunlun/api/rest"
-	"kunlun/api/rest/http_error"
-	"kunlun/internal/resource/engine"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/api/rest"
+	"github.com/huichen/kunlun/api/rest/http_error"
+
+	"github.com/huichen/kunlun/internal/resource/engine"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

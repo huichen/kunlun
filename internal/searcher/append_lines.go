@@ -3,8 +3,9 @@ package searcher
 import (
 	"errors"
 
-	"kunlun/internal/indexer"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 将搜索结果中文档的 section 信息转化为行

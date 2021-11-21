@@ -4,9 +4,10 @@ import (
 	"runtime"
 	"sync"
 
-	"kunlun/internal/ctags"
-	"kunlun/pkg/log"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/ctags"
+
+	"github.com/huichen/kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/types"
 
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 )

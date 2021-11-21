@@ -1,6 +1,6 @@
 package searcher
 
-import "kunlun/pkg/types"
+import "github.com/huichen/kunlun/pkg/types"
 
 // 当不止一个 repo 的时候，单个 repo 中的文档数不能超过 MaxDocumentsPerRepo
 func trimRepo(context *Context, response *types.SearchResponse) {

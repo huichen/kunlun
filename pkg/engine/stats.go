@@ -1,6 +1,6 @@
 package engine
 
-import "kunlun/pkg/types"
+import "github.com/huichen/kunlun/pkg/types"
 
 func (engine *KunlunEngine) GetIndexerStats() types.IndexerStats {
 	return engine.indexer.GetStats()

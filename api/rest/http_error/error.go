@@ -1,7 +1,7 @@
 package http_error
 
 import (
-	"kunlun/api/rest"
+	"github.com/huichen/kunlun/api/rest"
 )
 
 const (

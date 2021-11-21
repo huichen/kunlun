@@ -4,9 +4,9 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
-	"kunlun/pkg/engine"
-	"kunlun/pkg/log"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

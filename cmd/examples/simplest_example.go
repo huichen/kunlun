@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 
-	"kunlun/pkg/engine"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

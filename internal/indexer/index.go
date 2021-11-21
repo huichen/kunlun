@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"kunlun/pkg/log"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

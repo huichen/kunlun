@@ -5,7 +5,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"kunlun/internal/ngram_index"
+	"github.com/huichen/kunlun/internal/ngram_index"
 )
 
 func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.IndexKey, ngram_index.IndexKey, uint32) {

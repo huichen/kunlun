@@ -3,7 +3,7 @@ package indexer
 import (
 	"errors"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 搜索得到的关键词 section 转化成容易阅读的带高亮行信息

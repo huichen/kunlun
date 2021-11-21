@@ -4,8 +4,9 @@ import (
 	"reflect"
 	"sort"
 
-	"kunlun/internal/ngram_index"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/ngram_index"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func DocLocationsToSections(docs []ngram_index.DocumentWithLocations, length uint32) []types.DocumentWithSections {

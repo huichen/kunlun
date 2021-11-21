@@ -3,7 +3,7 @@ package searcher
 import (
 	"fmt"
 
-	"kunlun/internal/query"
+	"github.com/huichen/kunlun/internal/query"
 )
 
 // 获得所有 queryType 类型，汇总在返回结果

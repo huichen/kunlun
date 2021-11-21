@@ -4,7 +4,7 @@ import (
 	"io"
 	"net/http"
 
-	"kunlun/internal/resource/engine"
+	"github.com/huichen/kunlun/internal/resource/engine"
 )
 
 // 健康检查接口，用于返回搜索服务是否可用

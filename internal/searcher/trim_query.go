@@ -1,6 +1,6 @@
 package searcher
 
-import "kunlun/internal/query"
+import "github.com/huichen/kunlun/internal/query"
 
 // 对 q 做精简，只保留 token/regex/tree 三种类型的节点
 func TrimQuery(q *query.Query) *query.Query {

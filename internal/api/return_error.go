@@ -5,8 +5,9 @@ import (
 	"io"
 	"net/http"
 
-	"kunlun/api/rest"
-	"kunlun/pkg/log"
+	"github.com/huichen/kunlun/api/rest"
+
+	"github.com/huichen/kunlun/pkg/log"
 )
 
 var (

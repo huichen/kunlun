@@ -1,6 +1,6 @@
 package searcher
 
-import "kunlun/pkg/types"
+import "github.com/huichen/kunlun/pkg/types"
 
 type Searcher struct {
 	options *types.SearcherOptions

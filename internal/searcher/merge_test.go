@@ -6,8 +6,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"kunlun/internal/query"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/query"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func TestMergeSections(t *testing.T) {

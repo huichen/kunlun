@@ -6,7 +6,7 @@ import (
 	"sort"
 	"testing"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func TestIndexDocument(t *testing.T) {

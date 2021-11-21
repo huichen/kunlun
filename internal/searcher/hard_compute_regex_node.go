@@ -1,7 +1,7 @@
 package searcher
 
 import (
-	"kunlun/internal/query"
+	"github.com/huichen/kunlun/internal/query"
 )
 
 func (schr *Searcher) hardComputeOneRegexNode(context *Context, q *query.Query) error {

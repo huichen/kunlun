@@ -3,11 +3,11 @@ package engine
 import (
 	"sync"
 
-	"kunlun/internal/indexer"
-	"kunlun/internal/searcher"
-	"kunlun/internal/walker"
-	"kunlun/pkg/log"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+	"github.com/huichen/kunlun/internal/searcher"
+	"github.com/huichen/kunlun/internal/walker"
+	"github.com/huichen/kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

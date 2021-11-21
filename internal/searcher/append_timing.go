@@ -3,7 +3,7 @@ package searcher
 import (
 	"time"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 搜索结果中添加延时信息

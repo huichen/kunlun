@@ -1,9 +1,10 @@
 package searcher
 
 import (
-	"kunlun/internal/indexer"
-	"kunlun/internal/ranker"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+	"github.com/huichen/kunlun/internal/ranker"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 对搜索结果做注解，比如添加行信息、排序、过滤、分页等等

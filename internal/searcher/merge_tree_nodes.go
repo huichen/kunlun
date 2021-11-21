@@ -3,8 +3,9 @@ package searcher
 import (
 	"errors"
 
-	"kunlun/internal/query"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/query"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 合并树节点

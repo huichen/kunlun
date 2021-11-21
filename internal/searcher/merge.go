@@ -3,9 +3,10 @@ package searcher
 import (
 	"errors"
 
-	"kunlun/internal/indexer"
-	"kunlun/internal/query"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+	"github.com/huichen/kunlun/internal/query"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 使用 OR 或者 AND 逻辑归并多个 query 的文档结果（保存在 context.query.QueryResults）

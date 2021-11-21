@@ -4,8 +4,9 @@ import (
 	"errors"
 	"time"
 
-	"kunlun/internal/indexer"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func (schr *Searcher) searchFiles(context *Context, idxr *indexer.Indexer, request types.SearchRequest) (*types.SearchResponse, error) {

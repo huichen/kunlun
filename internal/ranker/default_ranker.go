@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 默认的排序器，先按照仓库名（local path 或者 remote URL）升序，然后按照文件名升序

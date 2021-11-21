@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"kunlun/pkg/engine"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func (kls *KLS) buildIndex() {

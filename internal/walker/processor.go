@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-enry/go-enry/v2"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 type walkerInfo struct {

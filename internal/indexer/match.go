@@ -3,7 +3,7 @@ package indexer
 import (
 	"errors"
 
-	"kunlun/internal/ngram_index"
+	"github.com/huichen/kunlun/internal/ngram_index"
 )
 
 // 在返回的二键匹配文档中，用 keyword 精准匹配过滤：

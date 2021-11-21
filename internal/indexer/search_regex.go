@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"sort"
 
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 搜索正则表达式

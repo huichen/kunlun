@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"kunlun/internal/indexer"
-	"kunlun/internal/query"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+	"github.com/huichen/kunlun/internal/query"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 一次搜索请求的上下文信息

@@ -3,7 +3,7 @@ package searcher
 import (
 	"errors"
 
-	"kunlun/internal/query"
+	"github.com/huichen/kunlun/internal/query"
 )
 
 // 对解析得到的 query 做合法性校验

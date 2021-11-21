@@ -1,10 +1,12 @@
 package searcher
 
 import (
-	"kunlun/internal/indexer"
-	"kunlun/pkg/types"
 	"sort"
 	"strings"
+
+	"github.com/huichen/kunlun/internal/indexer"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func transformSearchedDocsToResponse(context *Context, idxr *indexer.Indexer, docs []types.SearchedDocument) (*types.SearchResponse, error) {

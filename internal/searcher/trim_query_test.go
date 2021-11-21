@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"kunlun/internal/query"
+	"github.com/huichen/kunlun/internal/query"
 )
 
 func TestTrim(t *testing.T) {

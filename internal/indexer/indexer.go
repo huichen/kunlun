@@ -3,8 +3,9 @@ package indexer
 import (
 	"sync"
 
-	"kunlun/internal/ngram_index"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/ngram_index"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 type Indexer struct {

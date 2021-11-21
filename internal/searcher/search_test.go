@@ -6,8 +6,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"kunlun/internal/indexer"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/indexer"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func TestSearch1(t *testing.T) {

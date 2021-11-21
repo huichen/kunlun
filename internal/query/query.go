@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/log"
 )
 
 var (

@@ -3,7 +3,7 @@ package searcher
 import (
 	"regexp"
 
-	"kunlun/internal/query"
+	"github.com/huichen/kunlun/internal/query"
 )
 
 // 在 q 的树状结构中使用正则表达式匹配 pattern

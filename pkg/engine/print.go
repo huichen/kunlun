@@ -7,8 +7,9 @@ import (
 
 	"github.com/fatih/color"
 
-	"kunlun/internal/ngram_index"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/ngram_index"
+
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (

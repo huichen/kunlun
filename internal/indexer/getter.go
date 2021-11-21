@@ -1,6 +1,6 @@
 package indexer
 
-import "kunlun/internal/ngram_index"
+import "github.com/huichen/kunlun/internal/ngram_index"
 
 func (indexer *Indexer) GetKeyFrequency(key ngram_index.IndexKey) uint64 {
 	freq := uint64(0)

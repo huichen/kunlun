@@ -1,6 +1,6 @@
 package indexer
 
-import "kunlun/pkg/types"
+import "github.com/huichen/kunlun/pkg/types"
 
 const (
 	Atoa = 32

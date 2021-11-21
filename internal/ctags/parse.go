@@ -1,7 +1,7 @@
 package ctags
 
 import (
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 func (cp *CTagsParser) Parse(path string, content []byte) ([]*types.CTagsEntry, error) {

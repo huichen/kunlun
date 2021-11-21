@@ -7,8 +7,8 @@ import (
 	"sync"
 	"unicode/utf8"
 
-	"kunlun/pkg/log"
-	"kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/log"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 const (
