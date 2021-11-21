@@ -22,13 +22,14 @@ var (
 )
 
 func Search(w http.ResponseWriter, req *http.Request) {
-	// 识别 search type
+	// 得到搜索表达式
 	query := req.URL.Query().Get("q")
 	if query == "" {
 		ReturnError(w, req, http_error.MissingParameter)
 		return
 	}
 
+	// 单文档搜索参数
 	var docID int
 	var err error
 	idStr := req.URL.Query().Get("id")
@@ -40,16 +41,7 @@ func Search(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	var page int
-	pageStr := req.URL.Query().Get("page")
-	if pageStr != "" {
-		page, err = strconv.Atoi(pageStr)
-		if err != nil {
-			ReturnError(w, req, http_error.GetError(err))
-			return
-		}
-	}
-
+	// 两个分页参数
 	var pageSize int
 	pageSizeStr := req.URL.Query().Get("pageSize")
 	if pageSizeStr != "" {
@@ -64,7 +56,17 @@ func Search(w http.ResponseWriter, req *http.Request) {
 	} else {
 		pageSize = defaultPageSize
 	}
+	var page int
+	pageStr := req.URL.Query().Get("page")
+	if pageStr != "" {
+		page, err = strconv.Atoi(pageStr)
+		if err != nil {
+			ReturnError(w, req, http_error.GetError(err))
+			return
+		}
+	}
 
+	// 引擎
 	kgn := engine.GetEngine()
 
 	// 生成查询请求
@@ -91,12 +93,14 @@ func Search(w http.ResponseWriter, req *http.Request) {
 		TimeoutInMs:                    defaultTimeout,
 	}
 
+	// 调用引擎查询
 	sr, err := kgn.Search(request)
 	if err != nil {
 		ReturnError(w, req, http_error.GetError(err))
 		return
 	}
 
+	// 组织返回结构体
 	response := rest.SearchResponse{
 		NumRepos:                     sr.NumRepos,
 		NumDocuments:                 sr.NumDocuments,
@@ -106,7 +110,6 @@ func Search(w http.ResponseWriter, req *http.Request) {
 		SearchDurationInMicroSeconds: sr.SearchDurationInMicroSeconds,
 		RecallDurationInMicroSeconds: sr.RecallDurationInMicroSeconds,
 	}
-
 	// 添加 repos 和 documents
 	for _, repo := range sr.Repos {
 		repoResponse := rest.Repo{
@@ -115,6 +118,7 @@ func Search(w http.ResponseWriter, req *http.Request) {
 			LocalPath:          repo.LocalPath,
 			NumDocumentsInRepo: repo.NumDocumentsInRepo,
 			NumLinesInRepo:     repo.NumLinesInRepo,
+			NumSectionsInRepo:  repo.NumSectionsInRepo,
 		}
 		for _, doc := range repo.Documents {
 			lines := []rest.Line{}
@@ -134,22 +138,19 @@ func Search(w http.ResponseWriter, req *http.Request) {
 			}
 
 			repoResponse.Documents = append(repoResponse.Documents, rest.Document{
-				DocumentID:         doc.DocumentID,
-				Language:           doc.Language,
-				Filename:           doc.Filename,
-				Lines:              lines,
-				NumLinesInDocument: doc.NumLinesInDocument,
+				DocumentID:            doc.DocumentID,
+				Language:              doc.Language,
+				Filename:              doc.Filename,
+				Lines:                 lines,
+				NumLinesInDocument:    doc.NumLinesInDocument,
+				NumSectionsInDocument: doc.NumSectionsInDocument,
 			})
 		}
 		response.Repos = append(response.Repos, repoResponse)
 	}
+
+	// 正常返回
 	resp, _ := json.Marshal(&response)
 	w.Header().Set("Content-Type", "application/json")
 	io.WriteString(w, string(resp))
-}
-
-func trimOutput(response *types.SearchResponse) {
-	for id := range response.Repos {
-		response.Repos[id].LocalPath = ""
-	}
 }
