@@ -52,7 +52,7 @@ func NewIndexWalker(options *types.IndexWalkerOptions, pullMode bool) (*IndexWal
 	}
 	wkr.stats.Languages = make(map[string]types.FilesLinesBytes)
 
-	for i := 0; i < options.NumProcessors; i++ {
+	for i := 0; i < options.NumFileProcessors; i++ {
 		go wkr.fileProcessor(i)
 		parser, err := ctags.NewCTagsParser(options.CTagsParserOptions)
 		if err != nil {
@@ -75,7 +75,7 @@ func (dw *IndexWalker) Finish() {
 		parser.Close()
 	}
 
-	for i := 0; i < dw.options.NumProcessors; i++ {
+	for i := 0; i < dw.options.NumFileProcessors; i++ {
 		dw.walkerInfoChan <- walkerInfo{exit: true}
 	}
 }

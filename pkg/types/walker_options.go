@@ -20,7 +20,8 @@ type IndexWalkerOptions struct {
 	// 如果为空或者 nil 则不做过滤
 	AllowedCodeLanguages map[string]bool
 	// 是否允许未检测到语言的文件进入索引
-	AllowUnknownLanguage    bool
+	AllowUnknownLanguage bool
+	// 不索引这些语言的文件
 	DisallowedCodeLanguages map[string]bool // 优先级高于白名单
 
 	// 过滤超过这么大尺寸的文件
@@ -37,7 +38,11 @@ type IndexWalkerOptions struct {
 	// 过滤 . 开头的文件和目录
 	FilterDotPrefix bool
 
-	NumProcessors int
+	// 只对这个白名单中的仓库做索引，如果不设置则不过滤
+	AllowedRepoRemoteURLs map[string]bool
+
+	// 使用多少个线程做文件处理
+	NumFileProcessors int
 
 	// Ctags 选项
 	CTagsParserOptions *CTagsParserOptions
@@ -53,7 +58,7 @@ func NewIndexWalkerOptions() *IndexWalkerOptions {
 		MaxFileLines:             defaultMaxFileLines,
 		IgnoreDirs:               make(map[string]bool),
 		FilterDotPrefix:          true,
-		NumProcessors:            runtime.NumCPU() * 2,
+		NumFileProcessors:        runtime.NumCPU() * 2,
 	}
 }
 
@@ -151,7 +156,7 @@ func (options *IndexWalkerOptions) SetFilterDotPrefix(filter bool) *IndexWalkerO
 
 func (options *IndexWalkerOptions) SetNumProcessors(num int) *IndexWalkerOptions {
 	if num > 0 {
-		options.NumProcessors = num
+		options.NumFileProcessors = num
 	}
 	return options
 }

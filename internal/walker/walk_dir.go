@@ -84,6 +84,9 @@ func (dw *IndexWalker) returnToChan(path string, de *godirwalk.Dirent) error {
 		// 存在 .git 目录的情况，读取仓库信息
 		if _, err := os.Stat(path + "/.git"); !os.IsNotExist(err) {
 			err := dw.processGitRepo(path)
+			if err == godirwalk.SkipThis {
+				return godirwalk.SkipThis
+			}
 			if err != nil {
 				logger.Error(err)
 				dw.stats.GitDirError++
@@ -115,8 +118,16 @@ func (dw *IndexWalker) processGitRepo(path string) error {
 	var remoteURL string
 	if config.Remotes != nil {
 		if origin, ok := config.Remotes["origin"]; ok {
+			// 只处理有一个 origin 的仓库
 			if len(origin.URLs) == 1 {
 				remoteURL = origin.URLs[0]
+
+				// 白名单存在，且没有命中名单，则直接跳过
+				if dw.options.AllowedRepoRemoteURLs != nil {
+					if _, ok := dw.options.AllowedRepoRemoteURLs[remoteURL]; !ok {
+						return godirwalk.SkipThis
+					}
+				}
 
 				if dw.pullMode {
 					tree, err := repo.Worktree()
@@ -132,6 +143,8 @@ func (dw *IndexWalker) processGitRepo(path string) error {
 						return err
 					}
 				}
+			} else {
+				logger.Error("仓库 %s 的 origin 不止一个 URL，无法识别 remote URL", path)
 			}
 		}
 	}
