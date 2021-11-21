@@ -148,9 +148,6 @@ func (dw *IndexWalker) fileProcessor(shard int) {
 		var repoLocalPath, pathInRepo string
 		if !info.isGitRemoteRepo {
 			repoLocalPath, pathInRepo = dw.getFileRepoPath(path)
-			if pathInRepo == "" {
-				logger.Info(path)
-			}
 		} else {
 			pathInRepo = path
 		}
