@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"sort"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/query"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -13,14 +14,14 @@ import (
 // 1、qs 中可以是 negate 或者 non negate queries，但不能全都是 negate queries
 // 2、不支持 OR 和 negate queries 连用
 // 3、query 的文档结果中的 DocumentID 和 Lines 必须都是严格递增的（不能有相同元素）
-func mergeQueries(context *Context, qs []*query.Query, or bool) ([]types.DocumentWithSections, error) {
+func mergeQueries(context *Context, qs []*query.Query, or bool) ([]common_types.DocumentWithSections, error) {
 	if len(qs) == 0 {
 		return nil, nil
 	}
 
 	pointers := make([]int, len(qs))
 	preDocIDs := make([]uint64, len(qs))
-	ret := []types.DocumentWithSections{}
+	ret := []common_types.DocumentWithSections{}
 
 	// 首先计算有多少个非 negate 的 query
 	totalNonNegateQueries := 0
@@ -130,7 +131,7 @@ func mergeQueries(context *Context, qs []*query.Query, or bool) ([]types.Documen
 			if err != nil {
 				return nil, err
 			}
-			ret = append(ret, types.DocumentWithSections{
+			ret = append(ret, common_types.DocumentWithSections{
 				DocumentID: min,
 				Sections:   sections,
 			})

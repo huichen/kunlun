@@ -3,6 +3,7 @@ package engine
 import (
 	"sync"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/internal/searcher"
 	"github.com/huichen/kunlun/internal/walker"
@@ -72,7 +73,7 @@ func (engine *KunlunEngine) receiveWalkerOutput() {
 		if !file.IsRepo {
 			// 索引文件
 			engine.indexer.IndexFile(file.Content,
-				types.IndexFileInfo{
+				common_types.IndexFileInfo{
 					Path:          file.AbsPath,
 					Language:      file.Language,
 					PathInRepo:    file.PathInRepo,
@@ -98,7 +99,7 @@ func (engine *KunlunEngine) receiveWalkerOutput() {
 			}
 
 			engine.indexer.IndexRepo(
-				types.IndexRepoInfo{
+				common_types.IndexRepoInfo{
 					RepoID:        repoID,
 					RepoLocalPath: file.RepoLocalPath,
 					RepoRemoteURL: file.RepoRemoteURL,

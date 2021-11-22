@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
@@ -13,7 +14,7 @@ func TestLine(t *testing.T) {
 	options.SetNumIndexerShards(1)
 	idxr := NewIndexer(options)
 
-	idxr.IndexFile([]byte("aaaa\nbbbb\ncccc\ndddd\neeee\nffff\ngggg"), types.IndexFileInfo{Path: "this.doc.txt"})
+	idxr.IndexFile([]byte("aaaa\nbbbb\ncccc\ndddd\neeee\nffff\ngggg"), common_types.IndexFileInfo{Path: "this.doc.txt"})
 	idxr.Finish()
 
 	docs, _, err := idxr.GetLinesFromSections(1, []types.Section{

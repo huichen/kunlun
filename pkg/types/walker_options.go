@@ -10,6 +10,7 @@ var (
 	defaultMaxFileLines = 5000
 )
 
+// 遍历器创建参数
 type IndexWalkerOptions struct {
 	// 只对该 map 中 extension （比如 "go", "java"，包含 .）的文件做检索
 	// 如果为空或者 nil 则不做过滤

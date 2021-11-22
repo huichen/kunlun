@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/huichen/kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/common_types"
 )
 
 type CodeRepository struct {
@@ -19,7 +19,7 @@ type CodeRepository struct {
 }
 
 // 将代码仓库添加到索引
-func (indexer *Indexer) IndexRepo(info types.IndexRepoInfo) error {
+func (indexer *Indexer) IndexRepo(info common_types.IndexRepoInfo) error {
 	if indexer.finished {
 		logger.Fatal("indexer 已经完成索引，请勿再添加")
 	}

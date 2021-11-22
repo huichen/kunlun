@@ -1,3 +1,5 @@
+// 定义了日志打印接口
+// 可以通过 SetLogger 传入外部的日志打印函数
 package log
 
 import (

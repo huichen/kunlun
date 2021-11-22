@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
@@ -13,12 +14,12 @@ func TestSearchRegex(t *testing.T) {
 	options.SetNumIndexerShards(1)
 	idxr := NewIndexer(options)
 
-	idxr.IndexFile([]byte("this is a document"), types.IndexFileInfo{Path: "this0.doc.txt"})
-	idxr.IndexFile([]byte("this is a document"), types.IndexFileInfo{Path: "this1.doc.txt"})
-	idxr.IndexFile([]byte("thids is a document"), types.IndexFileInfo{Path: "this2.doc.txt"})
-	idxr.IndexFile([]byte("this is a document"), types.IndexFileInfo{Path: "this3.doc.txt"})
-	idxr.IndexFile([]byte("this is a document"), types.IndexFileInfo{Path: "this4.doc.txt"})
-	idxr.IndexFile([]byte("docs is good"), types.IndexFileInfo{Path: "this5.doc.txt"})
+	idxr.IndexFile([]byte("this is a document"), common_types.IndexFileInfo{Path: "this0.doc.txt"})
+	idxr.IndexFile([]byte("this is a document"), common_types.IndexFileInfo{Path: "this1.doc.txt"})
+	idxr.IndexFile([]byte("thids is a document"), common_types.IndexFileInfo{Path: "this2.doc.txt"})
+	idxr.IndexFile([]byte("this is a document"), common_types.IndexFileInfo{Path: "this3.doc.txt"})
+	idxr.IndexFile([]byte("this is a document"), common_types.IndexFileInfo{Path: "this4.doc.txt"})
+	idxr.IndexFile([]byte("docs is good"), common_types.IndexFileInfo{Path: "this5.doc.txt"})
 	idxr.Finish()
 
 	docs, _, err := idxr.internalSearchRegex(SearchRegexRequest{
@@ -26,7 +27,7 @@ func TestSearchRegex(t *testing.T) {
 		Tokens: []string{"this", "doc"},
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 13}},
@@ -53,7 +54,7 @@ func TestSearchRegex(t *testing.T) {
 		CandidateDocsNegate: true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{}, resp.Documents)
+	assert.Equal(t, []common_types.DocumentWithSections{}, resp.Documents)
 
 	// -a b
 	resp, err = idxr.SearchRegex(SearchRegexRequest{
@@ -63,7 +64,7 @@ func TestSearchRegex(t *testing.T) {
 		CandidateDocsNegate: true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 2,
 			Sections:   []types.Section{{0, 13}},
@@ -86,7 +87,7 @@ func TestSearchRegex(t *testing.T) {
 		CandidateDocs: &[]uint64{1, 2, 3},
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 3,
 			Sections:   []types.Section(nil),

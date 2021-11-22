@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/internal/query"
 	"github.com/huichen/kunlun/pkg/types"
@@ -25,7 +26,7 @@ type Context struct {
 	// 保存该次请求正则表达式搜索做了多少次，在一个文档做一次匹配则此计数器加一
 	regexSearchTimes int
 
-	docIDToDocumentWithSectionsMap map[uint64]*types.DocumentWithSections
+	docIDToDocumentWithSectionsMap map[uint64]*common_types.DocumentWithSections
 }
 
 func (c *Context) getSearchTokenRequest(token string, symbol bool) indexer.SearchTokenRequest {

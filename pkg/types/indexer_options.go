@@ -2,7 +2,7 @@ package types
 
 import "runtime"
 
-// 索引器生成选项，请使用下面的方式设置
+// 索引器创建选项
 type IndexerOptions struct {
 	NumIndexerShards int
 

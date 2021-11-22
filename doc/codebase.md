@@ -17,6 +17,7 @@ doc                 文档
 
 internal            所有不对外暴露的内部库放这里
     - api           KWS 接口实现
+    - common_types  内部共享的类型
     - ctags         ctags 解析器
     - indexer       索引器代码
     - kls           KLS 实现代码

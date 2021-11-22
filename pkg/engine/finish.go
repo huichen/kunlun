@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// 搜索前必须先调用这个函数
 func (engine *KunlunEngine) Finish() {
 	// 等待所有遍历请求完成
 	engine.walkerWaitGroup.Wait()

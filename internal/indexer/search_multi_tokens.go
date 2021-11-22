@@ -3,6 +3,7 @@ package indexer
 import (
 	"errors"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
@@ -27,7 +28,7 @@ func (indexer *Indexer) searchMultiTokens(
 	}
 
 	// 首先得到所有 token 的搜索结果
-	tokenSearchResults := []*[]types.DocumentWithSections{}
+	tokenSearchResults := []*[]common_types.DocumentWithSections{}
 	for _, token := range tokens {
 		request := SearchTokenRequest{
 			Token:         token,
@@ -46,7 +47,7 @@ func (indexer *Indexer) searchMultiTokens(
 }
 
 // 多个搜索结果取行交集
-func (indexer *Indexer) mergeResults(results []*[]types.DocumentWithSections) ([]documentWithLines, error) {
+func (indexer *Indexer) mergeResults(results []*[]common_types.DocumentWithSections) ([]documentWithLines, error) {
 	if len(results) == 0 {
 		return nil, nil
 	}

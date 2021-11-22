@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-enry/go-enry/v2"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
@@ -154,7 +155,7 @@ func (dw *IndexWalker) fileProcessor(shard int) {
 		}
 
 		// ctags
-		var entries []*types.CTagsEntry
+		var entries []*common_types.CTagsEntry
 		if dw.ctagsParsers != nil {
 			entries, _ = dw.ctagsParsers[shard].Parse(path, content)
 		}

@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/ngram_index"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -22,7 +23,7 @@ func TestSearchUtils(t *testing.T) {
 		},
 	}
 
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{1, 4}, {3, 6}, {4, 7}},

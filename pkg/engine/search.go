@@ -6,6 +6,7 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 完成一次搜索
 func (engine *KunlunEngine) Search(request types.SearchRequest) (*types.SearchResponse, error) {
 	if !engine.finished {
 		return nil, errors.New("索引即将构建完成，请稍后再来搜索 ~")

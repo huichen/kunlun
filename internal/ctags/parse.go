@@ -1,10 +1,10 @@
 package ctags
 
 import (
-	"github.com/huichen/kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/common_types"
 )
 
-func (cp *CTagsParser) Parse(path string, content []byte) ([]*types.CTagsEntry, error) {
+func (cp *CTagsParser) Parse(path string, content []byte) ([]*common_types.CTagsEntry, error) {
 	// 发送请求
 	req := request{
 		Command:  "generate-tags",
@@ -16,7 +16,7 @@ func (cp *CTagsParser) Parse(path string, content []byte) ([]*types.CTagsEntry, 
 	}
 
 	// 循环读取解析的每条记录
-	var es []*types.CTagsEntry
+	var es []*common_types.CTagsEntry
 	for {
 		var rep reply
 		if err := cp.read(&rep); err != nil {
@@ -26,7 +26,7 @@ func (cp *CTagsParser) Parse(path string, content []byte) ([]*types.CTagsEntry, 
 			break
 		}
 
-		e := types.CTagsEntry{
+		e := common_types.CTagsEntry{
 			Sym:      rep.Name,
 			Path:     rep.Path,
 			Line:     rep.Line,

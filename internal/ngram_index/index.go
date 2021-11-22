@@ -7,8 +7,8 @@ import (
 	"sync"
 	"unicode/utf8"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/log"
-	"github.com/huichen/kunlun/pkg/types"
 )
 
 const (
@@ -73,7 +73,7 @@ func NewNgramIndex() *NgramIndex {
 	}
 }
 
-func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entries []*types.CTagsEntry) error {
+func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entries []*common_types.CTagsEntry) error {
 	// 临时缓存，从文档中获得后一次性加入索引
 	indexCache := make(map[IndexKey]*[]uint32)
 	symbolIndexCache := make(map[IndexKey]*[]uint32)
@@ -292,7 +292,7 @@ func addIndexToCache(key IndexKey, start uint32, cache *map[IndexKey]*[]uint32) 
 //		symbolLength：当前符号的字节长度
 // 除此之外，还返回本文档是否继续添加符号（stopADdingSymbolIndex），和是否添加当前符号（addSymbolIndex）
 func updateSymbolLocations(
-	content []byte, startLocation uint32, lineIndex int, lineStart int, entryInLine int, entryIndex int, entries []*types.CTagsEntry,
+	content []byte, startLocation uint32, lineIndex int, lineStart int, entryInLine int, entryIndex int, entries []*common_types.CTagsEntry,
 ) (bool, bool, int, int, int, int, int, error) {
 	var stopAddingSymbolIndex bool
 	addSymbolIndex := false

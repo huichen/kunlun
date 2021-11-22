@@ -3,8 +3,8 @@ package indexer
 import (
 	"fmt"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/log"
-	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (
@@ -15,7 +15,7 @@ var (
 // 如果该文件不存在于索引中，会给该文件分配一个自增的文档 ID
 // 如果文件已经存在，则返回错误
 // 该函数协程安全，请尽可能并发调用
-func (indexer *Indexer) IndexFile(content []byte, info types.IndexFileInfo) error {
+func (indexer *Indexer) IndexFile(content []byte, info common_types.IndexFileInfo) error {
 	if indexer.finished {
 		logger.Fatal("indexer 已经完成索引，请勿再添加")
 	}

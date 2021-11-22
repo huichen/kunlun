@@ -1,5 +1,6 @@
 package types
 
+// 昆仑引擎创建选项
 type EngineOptions struct {
 	// 遍历器选项，如果后续不进行文件遍历，可以设为 nil
 	WalkerOptions *IndexWalkerOptions

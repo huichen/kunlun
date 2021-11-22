@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/query"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -16,19 +17,19 @@ func TestMergeTreeNodesAnd(t *testing.T) {
 	q, _ := query.Parse("(a and b)")
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -38,7 +39,7 @@ func TestMergeTreeNodesAnd(t *testing.T) {
 		},
 	}
 	internalMergeTreeNodes(&context, q)
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
@@ -52,19 +53,19 @@ func TestMergeTreeNodesOr(t *testing.T) {
 	q, _ := query.Parse("(a or b)")
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 4,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -74,7 +75,7 @@ func TestMergeTreeNodesOr(t *testing.T) {
 		},
 	}
 	internalMergeTreeNodes(&context, q)
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
@@ -96,29 +97,29 @@ func TestMergeTreeNodesDeep(t *testing.T) {
 	q, _ := query.Parse("(a or (b and c))")
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 4,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -129,13 +130,13 @@ func TestMergeTreeNodesDeep(t *testing.T) {
 		},
 	}
 	internalMergeTreeNodes(&context, q)
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
 		},
 	}, context.query.QueryResults[3])
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
@@ -154,19 +155,19 @@ func TestMergeTreeNodesPartial(t *testing.T) {
 	q, _ := query.Parse("a and b and (c or d)")
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -181,7 +182,7 @@ func TestMergeTreeNodesPartial(t *testing.T) {
 	internalMergeTreeNodes(&context, q)
 	assert.Equal(t, query.TreeQuery, q.SubQueries[1].Type)
 	assert.Equal(t, 2, len(q.SubQueries))
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
@@ -191,19 +192,19 @@ func TestMergeTreeNodesPartial(t *testing.T) {
 	q, _ = query.Parse("b and -a and (c or d)")
 	context = Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -218,7 +219,7 @@ func TestMergeTreeNodesPartial(t *testing.T) {
 	internalMergeTreeNodes(&context, q)
 	assert.Equal(t, query.TreeQuery, q.SubQueries[1].Type)
 	assert.Equal(t, 2, len(q.SubQueries))
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 3,
 			Sections:   []types.Section{{0, 4}},
@@ -228,19 +229,19 @@ func TestMergeTreeNodesPartial(t *testing.T) {
 	q, _ = query.Parse("-a and -b and (c or d)")
 	context = Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -255,7 +256,7 @@ func TestMergeTreeNodesPartial(t *testing.T) {
 	internalMergeTreeNodes(&context, q)
 	assert.Equal(t, query.TreeQuery, q.SubQueries[1].Type)
 	assert.Equal(t, 2, len(q.SubQueries))
-	assert.Equal(t, &[]types.DocumentWithSections{
+	assert.Equal(t, &[]common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
@@ -274,19 +275,19 @@ func TestMergeTreeNodesShortcutAnd(t *testing.T) {
 	q, _ := query.Parse("a and b and (c or d)")
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 4,
 						Sections:   []types.Section{{0, 4}},
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections:   []types.Section{{0, 4}},
 					},
@@ -299,7 +300,7 @@ func TestMergeTreeNodesShortcutAnd(t *testing.T) {
 		},
 	}
 	internalMergeTreeNodes(&context, q)
-	assert.Equal(t, &[]types.DocumentWithSections{}, context.query.QueryResults[5])
+	assert.Equal(t, &[]common_types.DocumentWithSections{}, context.query.QueryResults[5])
 }
 
 func TestMergeTreeNodesShortcutOr(t *testing.T) {
@@ -308,14 +309,14 @@ func TestMergeTreeNodesShortcutOr(t *testing.T) {
 	q, _ := query.Parse("a or b or (c and d)")
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections:   []types.Section{{0, 4}},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections:   []types.Section{{0, 4}},
 					},

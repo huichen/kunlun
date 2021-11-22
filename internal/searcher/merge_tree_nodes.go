@@ -3,8 +3,8 @@ package searcher
 import (
 	"errors"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/query"
-	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 合并树节点
@@ -79,7 +79,7 @@ func internalMergeTreeNodes(context *Context, q *query.Query) error {
 
 	// 合并计算过的节点
 	newQIsNegate := false
-	var newQ []types.DocumentWithSections
+	var newQ []common_types.DocumentWithSections
 	var err error
 	if numNegateNodes == len(computedNodes) {
 		// 所有计算过的节点都是 negate 节点，这种情况只可能为 AND 树，我们做变换

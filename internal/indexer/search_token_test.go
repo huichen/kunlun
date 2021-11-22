@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
@@ -13,7 +14,7 @@ func TestSearch(t *testing.T) {
 	options.SetNumIndexerShards(1)
 	idxr := NewIndexer(options)
 
-	idxr.IndexFile([]byte("this is a document"), types.IndexFileInfo{Path: "this.doc.txt"})
+	idxr.IndexFile([]byte("this is a document"), common_types.IndexFileInfo{Path: "this.doc.txt"})
 	idxr.Finish()
 
 	docs, err := idxr.internalSearchToken(SearchTokenRequest{
@@ -21,7 +22,7 @@ func TestSearch(t *testing.T) {
 		CaseSensitive: false,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 4}},
@@ -33,7 +34,7 @@ func TestSearch(t *testing.T) {
 		CaseSensitive: false,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{10, 14}},
@@ -45,7 +46,7 @@ func TestSearch(t *testing.T) {
 		CaseSensitive: false,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{10, 13}},
@@ -59,7 +60,7 @@ func TestSearchCase(t *testing.T) {
 
 	idxr := NewIndexer(options)
 
-	idxr.IndexFile([]byte("KAFKA_LoG_PRODUCER_HELPER"), types.IndexFileInfo{Path: "this.doc.txt"})
+	idxr.IndexFile([]byte("KAFKA_LoG_PRODUCER_HELPER"), common_types.IndexFileInfo{Path: "this.doc.txt"})
 	idxr.Finish()
 
 	docs, err := idxr.internalSearchToken(SearchTokenRequest{
@@ -67,7 +68,7 @@ func TestSearchCase(t *testing.T) {
 		CaseSensitive: true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{4, 9}},
@@ -79,7 +80,7 @@ func TestSearchCase(t *testing.T) {
 		CaseSensitive: true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{}, docs)
+	assert.Equal(t, []common_types.DocumentWithSections{}, docs)
 
 }
 
@@ -88,7 +89,7 @@ func TestSearchMore(t *testing.T) {
 	options.SetNumIndexerShards(1)
 	idxr := NewIndexer(options)
 
-	idxr.IndexFile([]byte("KAFKA_LOG_PRODUCER_HELPER"), types.IndexFileInfo{Path: "this.doc.txt"})
+	idxr.IndexFile([]byte("KAFKA_LOG_PRODUCER_HELPER"), common_types.IndexFileInfo{Path: "this.doc.txt"})
 	idxr.Finish()
 
 	docs, err := idxr.internalSearchToken(SearchTokenRequest{
@@ -96,7 +97,7 @@ func TestSearchMore(t *testing.T) {
 		CaseSensitive: false,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 25}},
@@ -109,7 +110,7 @@ func TestSearchToken(t *testing.T) {
 	options.SetNumIndexerShards(1)
 	idxr := NewIndexer(options)
 
-	idxr.IndexFile([]byte("KAFKA_LOG_PRODUCER_HELPER"), types.IndexFileInfo{Path: "this.doc.txt"})
+	idxr.IndexFile([]byte("KAFKA_LOG_PRODUCER_HELPER"), common_types.IndexFileInfo{Path: "this.doc.txt"})
 	idxr.Finish()
 
 	docs, err := idxr.SearchToken(SearchTokenRequest{
@@ -117,7 +118,7 @@ func TestSearchToken(t *testing.T) {
 		CaseSensitive: false,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections:   []types.Section{{0, 25}},
@@ -131,9 +132,9 @@ func TestSearchSymbol(t *testing.T) {
 	idxr := NewIndexer(options)
 
 	idxr.IndexFile([]byte("a1 a2 a3\nb1 b2 b3\nc1 c2 c3"),
-		types.IndexFileInfo{
+		common_types.IndexFileInfo{
 			Path: "this.doc.txt",
-			CTagsEntries: []*types.CTagsEntry{
+			CTagsEntries: []*common_types.CTagsEntry{
 				{Sym: "a2", Line: 1},
 				{Sym: "b1", Line: 2},
 				{Sym: "c3", Line: 3},
@@ -147,7 +148,7 @@ func TestSearchSymbol(t *testing.T) {
 		IsSymbol:      true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{}, docs)
+	assert.Equal(t, []common_types.DocumentWithSections{}, docs)
 
 	docs, err = idxr.SearchToken(SearchTokenRequest{
 		Token:         "b2",
@@ -155,7 +156,7 @@ func TestSearchSymbol(t *testing.T) {
 		IsSymbol:      true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{}, docs)
+	assert.Equal(t, []common_types.DocumentWithSections{}, docs)
 
 	docs, err = idxr.SearchToken(SearchTokenRequest{
 		Token:         "b2",
@@ -163,7 +164,7 @@ func TestSearchSymbol(t *testing.T) {
 		IsSymbol:      false,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{DocumentID: 0x1, Sections: []types.Section{{Start: 12, End: 14}}},
 	}, docs)
 
@@ -173,7 +174,7 @@ func TestSearchSymbol(t *testing.T) {
 		IsSymbol:      true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{DocumentID: 0x1, Sections: []types.Section{{Start: 9, End: 11}}},
 	}, docs)
 
@@ -183,7 +184,7 @@ func TestSearchSymbol(t *testing.T) {
 		IsSymbol:      true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{DocumentID: 0x1, Sections: []types.Section{{Start: 3, End: 5}}},
 	}, docs)
 
@@ -193,7 +194,7 @@ func TestSearchSymbol(t *testing.T) {
 		IsSymbol:      true,
 	})
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{DocumentID: 0x1, Sections: []types.Section{{Start: 24, End: 26}}},
 	}, docs)
 

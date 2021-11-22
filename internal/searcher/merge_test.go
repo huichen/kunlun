@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/query"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -60,9 +61,9 @@ func TestMergeQueries1(t *testing.T) {
 	}
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {3, 4}, {7, 8},
@@ -70,13 +71,13 @@ func TestMergeQueries1(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
@@ -84,19 +85,19 @@ func TestMergeQueries1(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
@@ -109,7 +110,7 @@ func TestMergeQueries1(t *testing.T) {
 
 	r, err := mergeQueries(&context, queries, true)
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections: []types.Section{
@@ -132,7 +133,7 @@ func TestMergeQueries1(t *testing.T) {
 
 	r, err = mergeQueries(&context, queries, false)
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections: []types.Section{
@@ -147,15 +148,15 @@ func TestMergeQueries1(t *testing.T) {
 	}
 	context = Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 14}, {11, 18},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 14}, {11, 18},
@@ -163,7 +164,7 @@ func TestMergeQueries1(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {3, 14}, {7, 18},
@@ -176,7 +177,7 @@ func TestMergeQueries1(t *testing.T) {
 
 	r, err = mergeQueries(&context, queries, false)
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 3,
 			Sections: []types.Section{
@@ -196,9 +197,9 @@ func TestMergeQueriesError(t *testing.T) {
 	}
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {3, 4}, {7, 8},
@@ -206,13 +207,13 @@ func TestMergeQueriesError(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
@@ -220,19 +221,19 @@ func TestMergeQueriesError(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
@@ -258,16 +259,16 @@ func TestMergeQueriesEmpty(t *testing.T) {
 	}
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
@@ -275,19 +276,19 @@ func TestMergeQueriesEmpty(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
@@ -299,7 +300,7 @@ func TestMergeQueriesEmpty(t *testing.T) {
 	}
 
 	r, _ := mergeQueries(&context, queries, true)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections: []types.Section{
@@ -321,7 +322,7 @@ func TestMergeQueriesEmpty(t *testing.T) {
 	}, r)
 
 	r, _ = mergeQueries(&context, queries, false)
-	assert.Equal(t, []types.DocumentWithSections{}, r)
+	assert.Equal(t, []common_types.DocumentWithSections{}, r)
 }
 
 func TestMergeQueriesNegate(t *testing.T) {
@@ -335,15 +336,15 @@ func TestMergeQueriesNegate(t *testing.T) {
 
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {3, 4}, {7, 8},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
@@ -351,7 +352,7 @@ func TestMergeQueriesNegate(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
@@ -359,19 +360,19 @@ func TestMergeQueriesNegate(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 2,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
 						},
 					},
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 3,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {5, 6}, {10, 11}, {11, 12},
@@ -384,7 +385,7 @@ func TestMergeQueriesNegate(t *testing.T) {
 
 	r, err := mergeQueries(&context, queries, false)
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 3,
 			Sections: []types.Section{
@@ -405,9 +406,9 @@ func TestMergeMoreQueries(t *testing.T) {
 
 	context := Context{
 		query: &SearchQuery{
-			QueryResults: []*[]types.DocumentWithSections{
+			QueryResults: []*[]common_types.DocumentWithSections{
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 4,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {3, 4}, {7, 8},
@@ -415,7 +416,7 @@ func TestMergeMoreQueries(t *testing.T) {
 					},
 				},
 				{
-					types.DocumentWithSections{
+					common_types.DocumentWithSections{
 						DocumentID: 1,
 						Sections: []types.Section{
 							{1, 2}, {2, 3}, {4, 5}, {11, 12},
@@ -428,7 +429,7 @@ func TestMergeMoreQueries(t *testing.T) {
 
 	r, err := mergeQueries(&context, queries, true)
 	assert.Nil(t, err)
-	assert.Equal(t, []types.DocumentWithSections{
+	assert.Equal(t, []common_types.DocumentWithSections{
 		{
 			DocumentID: 1,
 			Sections: []types.Section{

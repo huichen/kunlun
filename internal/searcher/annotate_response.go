@@ -1,6 +1,7 @@
 package searcher
 
 import (
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/internal/ranker"
 	"github.com/huichen/kunlun/pkg/types"
@@ -72,7 +73,7 @@ func accumulateResultsToDocuments(
 	start := 0
 	end := len(*results)
 	retDocs := []types.SearchedDocument{}
-	context.docIDToDocumentWithSectionsMap = make(map[uint64]*types.DocumentWithSections)
+	context.docIDToDocumentWithSectionsMap = make(map[uint64]*common_types.DocumentWithSections)
 	for indexDoc := start; indexDoc < end; indexDoc++ {
 		doc := (*results)[indexDoc]
 		context.docIDToDocumentWithSectionsMap[doc.DocumentID] = &doc

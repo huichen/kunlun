@@ -1,5 +1,6 @@
 package types
 
+// 遍历器统计指标
 type IndexWalkerStats struct {
 	IndexedRepos int
 	IndexedDirs  int

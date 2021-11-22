@@ -3,8 +3,8 @@ package searcher
 import (
 	"regexp"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/query"
-	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 封装了搜索表达式解析得到的信息
@@ -17,7 +17,7 @@ type SearchQuery struct {
 	TrimmedQuery *query.Query
 
 	// 保存 TrimmedQuery 计算得到的 docID slice，长度和 TrimmedQuery 的节点数相同
-	QueryResults []*[]types.DocumentWithSections
+	QueryResults []*[]common_types.DocumentWithSections
 
 	// 从 OriginalQuery 中解析出的大小写
 	Case bool
@@ -46,7 +46,7 @@ func (q *SearchQuery) DoneCompute() bool {
 	return q.QueryResults[l-1] != nil
 }
 
-func (q *SearchQuery) Result() *[]types.DocumentWithSections {
+func (q *SearchQuery) Result() *[]common_types.DocumentWithSections {
 	l := len(q.QueryResults)
 	if l == 0 {
 		return nil

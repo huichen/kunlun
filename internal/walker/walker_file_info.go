@@ -1,6 +1,6 @@
 package walker
 
-import "github.com/huichen/kunlun/pkg/types"
+import "github.com/huichen/kunlun/internal/common_types"
 
 type WalkerFileInfo struct {
 	// 返回是否是代码仓库，如果为否则为文件
@@ -33,5 +33,5 @@ type WalkerFileInfo struct {
 	WalkingDone bool
 
 	// 返回解析的 CTags 标签
-	CTagsEntries []*types.CTagsEntry
+	CTagsEntries []*common_types.CTagsEntry
 }

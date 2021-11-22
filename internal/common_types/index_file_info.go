@@ -1,4 +1,4 @@
-package types
+package common_types
 
 // 用于添加索引时传入外部解析的文件信息
 type IndexFileInfo struct {

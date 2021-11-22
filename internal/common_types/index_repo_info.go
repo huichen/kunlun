@@ -1,4 +1,4 @@
-package types
+package common_types
 
 type IndexRepoInfo struct {
 	// 如果这个值不为 0 那么从外部传入 RepoID

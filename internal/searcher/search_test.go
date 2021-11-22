@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -17,16 +18,16 @@ func TestSearch1(t *testing.T) {
 	idxrOptions.SetNumIndexerShards(1)
 	idxr := indexer.NewIndexer(idxrOptions)
 
-	idxr.IndexFile([]byte("aaaa"), types.IndexFileInfo{Path: "repo_a/file_a"})
-	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_a/file_b"})
-	idxr.IndexFile([]byte("cccc"), types.IndexFileInfo{Path: "repo_a/file_c"})
-	idxr.IndexFile([]byte("bb\naa"), types.IndexFileInfo{Path: "repo_b/file_a"})
-	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_b/file_d"})
-	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_c/file_d"})
-	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_c/file_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
+	idxr.IndexFile([]byte("aaaa"), common_types.IndexFileInfo{Path: "repo_a/file_a"})
+	idxr.IndexFile([]byte("bbbb"), common_types.IndexFileInfo{Path: "repo_a/file_b"})
+	idxr.IndexFile([]byte("cccc"), common_types.IndexFileInfo{Path: "repo_a/file_c"})
+	idxr.IndexFile([]byte("bb\naa"), common_types.IndexFileInfo{Path: "repo_b/file_a"})
+	idxr.IndexFile([]byte("dddd"), common_types.IndexFileInfo{Path: "repo_b/file_d"})
+	idxr.IndexFile([]byte("dddd"), common_types.IndexFileInfo{Path: "repo_c/file_d"})
+	idxr.IndexFile([]byte("bbbb"), common_types.IndexFileInfo{Path: "repo_c/file_b"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
 	idxr.Finish()
 
 	options := types.NewSearcherOptions()
@@ -58,6 +59,7 @@ func testDocs(t *testing.T, expected, actual []types.SearchedDocument) {
 	for i := range actual {
 		for j := range actual[i].Lines {
 			actual[i].Lines[j].Content = nil
+			actual[i].NumSectionsInDocument = 0
 		}
 	}
 	assert.Equal(t, expected, actual)
@@ -70,16 +72,16 @@ func TestSearch2(t *testing.T) {
 	idxrOptions.SetNumIndexerShards(1)
 	idxr := indexer.NewIndexer(idxrOptions)
 
-	idxr.IndexFile([]byte("aaaa"), types.IndexFileInfo{Path: "repo_a/file_a"})
-	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_a/file_b"})
-	idxr.IndexFile([]byte("cccc"), types.IndexFileInfo{Path: "repo_a/file_c"})
-	idxr.IndexFile([]byte("bb\naa"), types.IndexFileInfo{Path: "repo_b/file_a"})
-	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_b/file_d"})
-	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_c/file_d"})
-	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_c/file_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
+	idxr.IndexFile([]byte("aaaa"), common_types.IndexFileInfo{Path: "repo_a/file_a"})
+	idxr.IndexFile([]byte("bbbb"), common_types.IndexFileInfo{Path: "repo_a/file_b"})
+	idxr.IndexFile([]byte("cccc"), common_types.IndexFileInfo{Path: "repo_a/file_c"})
+	idxr.IndexFile([]byte("bb\naa"), common_types.IndexFileInfo{Path: "repo_b/file_a"})
+	idxr.IndexFile([]byte("dddd"), common_types.IndexFileInfo{Path: "repo_b/file_d"})
+	idxr.IndexFile([]byte("dddd"), common_types.IndexFileInfo{Path: "repo_c/file_d"})
+	idxr.IndexFile([]byte("bbbb"), common_types.IndexFileInfo{Path: "repo_c/file_b"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
 	idxr.Finish()
 
 	options := types.NewSearcherOptions()
@@ -224,16 +226,16 @@ func TestSearchBuggy(t *testing.T) {
 	idxrOptions.SetNumIndexerShards(1)
 	idxr := indexer.NewIndexer(idxrOptions)
 
-	idxr.IndexFile([]byte("aaaa"), types.IndexFileInfo{Path: "repo_a/file_a"})
-	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_a/file_b"})
-	idxr.IndexFile([]byte("cccc"), types.IndexFileInfo{Path: "repo_a/file_c"})
-	idxr.IndexFile([]byte("bb\naa"), types.IndexFileInfo{Path: "repo_b/file_a"})
-	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_b/file_d"})
-	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_c/file_d"})
-	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_c/file_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
+	idxr.IndexFile([]byte("aaaa"), common_types.IndexFileInfo{Path: "repo_a/file_a"})
+	idxr.IndexFile([]byte("bbbb"), common_types.IndexFileInfo{Path: "repo_a/file_b"})
+	idxr.IndexFile([]byte("cccc"), common_types.IndexFileInfo{Path: "repo_a/file_c"})
+	idxr.IndexFile([]byte("bb\naa"), common_types.IndexFileInfo{Path: "repo_b/file_a"})
+	idxr.IndexFile([]byte("dddd"), common_types.IndexFileInfo{Path: "repo_b/file_d"})
+	idxr.IndexFile([]byte("dddd"), common_types.IndexFileInfo{Path: "repo_c/file_d"})
+	idxr.IndexFile([]byte("bbbb"), common_types.IndexFileInfo{Path: "repo_c/file_b"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
+	idxr.IndexRepo(common_types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
 	idxr.Finish()
 
 	options := types.NewSearcherOptions()
@@ -246,8 +248,8 @@ func TestSearchBuggy(t *testing.T) {
 	logger.Info(err)
 	testDocs(t, []types.SearchedDocument{
 		{
-			DocumentID: 1,
-			Filename:   "file_a",
+			DocumentID: 2,
+			Filename:   "file_b",
 			Lines: []types.Line{
 				{
 					LineNumber: 0,
@@ -257,8 +259,8 @@ func TestSearchBuggy(t *testing.T) {
 			NumLinesInDocument: 1,
 		},
 		{
-			DocumentID: 2,
-			Filename:   "file_b",
+			DocumentID: 1,
+			Filename:   "file_a",
 			Lines: []types.Line{
 				{
 					LineNumber: 0,

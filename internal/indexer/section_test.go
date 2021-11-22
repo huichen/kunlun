@@ -3,9 +3,8 @@ package indexer
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/huichen/kunlun/pkg/types"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMergeSection(t *testing.T) {

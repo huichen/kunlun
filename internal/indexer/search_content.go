@@ -3,8 +3,8 @@ package indexer
 import (
 	"sort"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/ngram_index"
-	"github.com/huichen/kunlun/pkg/types"
 )
 
 // 使用 key1、key2 以及他们之间的距离 distance 在索引中查询满足条件的文档及分段的起始位置
@@ -24,7 +24,7 @@ func (indexer *Indexer) searchContent(
 	caseSensitive bool,
 	isSymbol bool,
 	shouldDocBeRecalled func(uint64) bool,
-) ([]types.DocumentWithSections, error) {
+) ([]common_types.DocumentWithSections, error) {
 	responseChan := make(chan contentSearchResponseInfo, indexer.numIndexerShards)
 
 	// 启动搜索协程
@@ -64,7 +64,7 @@ func (indexer *Indexer) searchContent(
 
 	// 搜索结果为空，直接返回
 	if len(retDocs) == 0 {
-		return []types.DocumentWithSections{}, nil
+		return []common_types.DocumentWithSections{}, nil
 	}
 
 	sort.Sort(ngram_index.SortDocumentWithLocations(retDocs))

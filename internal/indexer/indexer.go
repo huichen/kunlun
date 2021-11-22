@@ -3,6 +3,7 @@ package indexer
 import (
 	"sync"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/ngram_index"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -58,7 +59,7 @@ type Indexer struct {
 type IndexInfo struct {
 	DocID        uint64
 	Content      []byte
-	CTagsEntries []*types.CTagsEntry
+	CTagsEntries []*common_types.CTagsEntry
 
 	// 退出信号
 	Exit bool

@@ -6,7 +6,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/huichen/kunlun/pkg/types"
+	"github.com/huichen/kunlun/internal/common_types"
 )
 
 func TestIndexDocument(t *testing.T) {
@@ -153,7 +153,7 @@ func TestIndexCTags(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), []*types.CTagsEntry{
+	err := index.IndexDocument(1, []byte(content), []*common_types.CTagsEntry{
 		{Sym: "a2", Line: 1},
 		{Sym: "b1", Line: 2},
 		{Sym: "c3", Line: 3},
@@ -188,7 +188,7 @@ func TestIndexCTagsMismatch(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), []*types.CTagsEntry{
+	err := index.IndexDocument(1, []byte(content), []*common_types.CTagsEntry{
 		{Sym: "a4", Line: 1},
 		{Sym: "a2", Line: 1},
 		{Sym: "a5", Line: 1},

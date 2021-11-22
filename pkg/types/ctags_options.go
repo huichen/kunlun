@@ -4,6 +4,7 @@ const (
 	defaultCtagsParsingTimeout = 10000
 )
 
+// ctags 解析器参数
 type CTagsParserOptions struct {
 	BinaryPath string
 }

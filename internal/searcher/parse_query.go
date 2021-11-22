@@ -3,8 +3,8 @@ package searcher
 import (
 	"regexp"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/query"
-	"github.com/huichen/kunlun/pkg/types"
 )
 
 func ParseQuery(pattern string) (*SearchQuery, error) {
@@ -57,7 +57,7 @@ func ParseQuery(pattern string) (*SearchQuery, error) {
 	retQuery := &SearchQuery{
 		OriginalQuery: originalQuery,
 		TrimmedQuery:  searchQ,
-		QueryResults:  make([]*[]types.DocumentWithSections, numNodes),
+		QueryResults:  make([]*[]common_types.DocumentWithSections, numNodes),
 
 		Case: queryCase,
 

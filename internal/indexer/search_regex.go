@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"sort"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
@@ -37,7 +38,7 @@ type SearchRegexRequest struct {
 }
 
 type SearchRegexResponse struct {
-	Documents []types.DocumentWithSections
+	Documents []common_types.DocumentWithSections
 	Negate    bool
 
 	RegexSearchTimes int
@@ -67,7 +68,7 @@ func (indexer *Indexer) SearchRegex(request SearchRegexRequest) (*SearchRegexRes
 	}, nil
 }
 
-func (indexer *Indexer) internalSearchRegex(request SearchRegexRequest) ([]types.DocumentWithSections, int, error) {
+func (indexer *Indexer) internalSearchRegex(request SearchRegexRequest) ([]common_types.DocumentWithSections, int, error) {
 	maxResults := request.MaxResultsPerFile
 	if maxResults <= 0 {
 		maxResults = -1
@@ -140,7 +141,7 @@ func (indexer *Indexer) searchRegexInDocs(
 	caseSensitive bool,
 	maxResultsPerFile int,
 	shouldDocBeRecalled func(uint64) bool,
-) ([]types.DocumentWithSections, int, error) {
+) ([]common_types.DocumentWithSections, int, error) {
 	// 是否大小写敏感
 	if !caseSensitive {
 		regex = "(?i)" + regex
@@ -197,7 +198,7 @@ func (indexer *Indexer) searchRegexInDocs(
 
 	// 收集结果
 	searchTimes := 0
-	retDocs := []types.DocumentWithSections{}
+	retDocs := []common_types.DocumentWithSections{}
 	for i := 0; i < numRegexSearchWorkers; i++ {
 		ret := <-returnChan
 		retDocs = append(retDocs, ret.Docs...)
@@ -218,7 +219,7 @@ type regexSearchInfo struct {
 	Exit       bool
 }
 type regexSearchReturn struct {
-	Docs          []types.DocumentWithSections
+	Docs          []common_types.DocumentWithSections
 	SearchedTimes int
 }
 
@@ -232,7 +233,7 @@ func (indexer *Indexer) regexSearcher(
 ) {
 	searchTimes := 0
 
-	retDocs := []types.DocumentWithSections{}
+	retDocs := []common_types.DocumentWithSections{}
 	for {
 		info := <-infoChan
 		if info.Exit {
@@ -266,7 +267,7 @@ func (indexer *Indexer) regexSearcher(
 							})
 					}
 				}
-				retDocs = append(retDocs, types.DocumentWithSections{
+				retDocs = append(retDocs, common_types.DocumentWithSections{
 					DocumentID: info.DocumentID,
 					Sections:   index,
 				})
@@ -274,7 +275,7 @@ func (indexer *Indexer) regexSearcher(
 				if intIndex != nil {
 					continue
 				}
-				retDocs = append(retDocs, types.DocumentWithSections{
+				retDocs = append(retDocs, common_types.DocumentWithSections{
 					DocumentID: info.DocumentID,
 				})
 			}
@@ -303,7 +304,7 @@ func (indexer *Indexer) regexSearcher(
 			if len(sections) == 0 {
 				continue
 			}
-			retDocs = append(retDocs, types.DocumentWithSections{
+			retDocs = append(retDocs, common_types.DocumentWithSections{
 				DocumentID: info.DocumentID,
 				Sections:   sections,
 			})

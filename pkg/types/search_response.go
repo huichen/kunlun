@@ -113,3 +113,8 @@ type Line struct {
 	// 行高亮，标识了高亮段在行中的起止位置
 	Highlights []Section `json:"Highlights,omitempty"`
 }
+
+type Section struct {
+	Start uint32
+	End   uint32
+}

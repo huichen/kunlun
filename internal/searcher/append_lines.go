@@ -3,6 +3,7 @@ package searcher
 import (
 	"errors"
 
+	"github.com/huichen/kunlun/internal/common_types"
 	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -93,7 +94,7 @@ func appendLinesToDocument(
 		contextLines = 0
 	}
 
-	var doc *types.DocumentWithSections
+	var doc *common_types.DocumentWithSections
 	var ok bool
 	if doc, ok = context.docIDToDocumentWithSectionsMap[searchedDocument.DocumentID]; !ok {
 		return errors.New("doc id 没找到")

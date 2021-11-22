@@ -1,5 +1,6 @@
 package types
 
+// 搜索请求
 type SearchRequest struct {
 	// 原始搜索表达式
 	Query string

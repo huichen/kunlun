@@ -4,6 +4,7 @@ import (
 	"runtime"
 )
 
+// 搜索器创建参数
 type SearcherOptions struct {
 	// 每次请求可以发起多少线程用于做注解
 	AnnotatorProcessors int

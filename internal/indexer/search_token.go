@@ -1,6 +1,6 @@
 package indexer
 
-import "github.com/huichen/kunlun/pkg/types"
+import "github.com/huichen/kunlun/internal/common_types"
 
 const (
 	Atoa = 32
@@ -24,7 +24,7 @@ type SearchTokenRequest struct {
 
 // 在索引中查找包含关键词的文档
 // 如果没有返回结果，返回空数组（非 nil）
-func (indexer *Indexer) SearchToken(request SearchTokenRequest) ([]types.DocumentWithSections, error) {
+func (indexer *Indexer) SearchToken(request SearchTokenRequest) ([]common_types.DocumentWithSections, error) {
 	matchedDocs, err := indexer.internalSearchToken(request)
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (indexer *Indexer) SearchToken(request SearchTokenRequest) ([]types.Documen
 	return matchedDocs, nil
 }
 
-func (indexer *Indexer) internalSearchToken(request SearchTokenRequest) ([]types.DocumentWithSections, error) {
+func (indexer *Indexer) internalSearchToken(request SearchTokenRequest) ([]common_types.DocumentWithSections, error) {
 	// 获取 keyword 对应的 index keys，distance 等信息
 	offset, key1, key2, distance := indexer.getTwoKeysFromToken(request.Token)
 	if key1 == 0 {

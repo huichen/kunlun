@@ -17,6 +17,7 @@ var (
 	green = color.New(color.FgGreen).SprintfFunc()
 )
 
+// 在终端彩色打印搜索返回结果
 func (engine *KunlunEngine) PrettyPrintSearchResponse(
 	searchResponse *types.SearchResponse,
 	colorPrint bool,

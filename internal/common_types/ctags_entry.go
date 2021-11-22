@@ -1,5 +1,6 @@
-package types
+package common_types
 
+// ctags 解析出来的文档中的符号信息
 type CTagsEntry struct {
 	Sym      string
 	Path     string
