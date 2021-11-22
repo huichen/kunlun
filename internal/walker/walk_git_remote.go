@@ -6,7 +6,7 @@ import (
 	"github.com/go-git/go-git/v5/storage/memory"
 )
 
-// 遍历  dirPath 目录下的所有文件，并将文件信息通过 fileChan 通道回传给上游
+// 下载 gitURL 指向的远程代码仓库到内存，添加该仓库，然后遍历添加其中所有文件
 func (dw *IndexWalker) WalkGitRemote(gitURL string) {
 	if dw.pullMode {
 		// dryrun 模式下不爬取远程仓库

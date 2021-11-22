@@ -15,6 +15,7 @@ var (
 	logger = log.GetLogger()
 )
 
+// 文件遍历器，用于控制哪些仓库和文件需要添加到索引中
 type IndexWalker struct {
 	options *types.IndexWalkerOptions
 

@@ -22,6 +22,7 @@ type walkerInfo struct {
 	exit bool
 }
 
+// 文件处理线程
 func (dw *IndexWalker) fileProcessor(shard int) {
 	for {
 		info := <-dw.walkerInfoChan
