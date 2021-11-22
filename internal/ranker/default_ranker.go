@@ -7,7 +7,8 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
-// 默认的排序器，先按照仓库名（local path 或者 remote URL）升序，然后按照文件名升序
+// 默认的排序器，仓库按照匹配的文档数降序，仓库中的文档再排序
+// 具体逻辑见下面的 compareRepos 和 compareDocuments 函数
 type DefaultRanker struct {
 }
 
@@ -50,6 +51,7 @@ func compareRepos(repo1 *types.SearchedRepo, repo2 *types.SearchedRepo) bool {
 }
 
 // 先按照文档匹配的section数倒排序，如果相同按照文件名正序
+// 注意这里没有用 NumLinesInDocument 因为这个时候还没有文档中匹配行的信息，只有匹配的分段信息
 func compareDocuments(doc1 types.SearchedDocument, doc2 types.SearchedDocument) bool {
 	if doc1.NumSectionsInDocument != doc2.NumSectionsInDocument {
 		return doc1.NumSectionsInDocument > doc2.NumSectionsInDocument

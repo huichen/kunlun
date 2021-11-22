@@ -8,6 +8,7 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 将一个搜索得到的文档数组转化为输出格式（按照仓库进行组织）
 func transformSearchedDocsToResponse(context *Context, idxr *indexer.Indexer, docs []types.SearchedDocument) (*types.SearchResponse, error) {
 	outputRepos := []*types.SearchedRepo{}
 	searchedRepoMap := make(map[uint64]*types.SearchedRepo)

@@ -8,6 +8,8 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 使用表达式对文件做检索
+// 表达式为 file:xxx 的形式，且不做内容匹配，只搜索匹配的文件名
 func (schr *Searcher) searchFiles(context *Context, idxr *indexer.Indexer, request types.SearchRequest) (*types.SearchResponse, error) {
 	fileQuery := context.query.FileQuery
 

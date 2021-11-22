@@ -4,6 +4,9 @@ import (
 	"github.com/huichen/kunlun/internal/query"
 )
 
+// “硬”计算第一个找到的（逐级遍历）一个正则表达式节点，计算时不使用表达式上下文信息
+// 与之对应的，“软”计算会尝试使用表达式的上下文做联合优化
+// 关于“软”计算的方式请见 soft_compute_regex_node.go 中注释
 func (schr *Searcher) hardComputeOneRegexNode(context *Context, q *query.Query) error {
 	_, err := schr.internalHardComputeOneRegexNode(context, q)
 	if err != nil {

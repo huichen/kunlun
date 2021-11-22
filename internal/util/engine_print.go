@@ -10,6 +10,7 @@ import (
 	"github.com/huichen/kunlun/pkg/engine"
 )
 
+// 打印索引器统计信息
 func PrintIndexerStats(kgn *engine.KunlunEngine) {
 	stats := kgn.GetIndexerStats()
 	fmt.Printf("索引统计：\n"+
@@ -25,6 +26,7 @@ func PrintIndexerStats(kgn *engine.KunlunEngine) {
 		stats.FailedAddingSymbol)
 }
 
+// 打印遍历器统计信息
 func PrintWalkerStats(kgn *engine.KunlunEngine) {
 	stats := kgn.GetWalkerStats()
 	stats.Languages = nil
@@ -33,9 +35,9 @@ func PrintWalkerStats(kgn *engine.KunlunEngine) {
 	fmt.Printf("遍历统计：\n%# v\n", pretty.Formatter(stats))
 
 	stats = kgn.GetWalkerStats()
-	var langStats []LanguageWithStats
+	var langStats []languageWithStats
 	for l, s := range stats.Languages {
-		langStats = append(langStats, LanguageWithStats{
+		langStats = append(langStats, languageWithStats{
 			Lang:  l,
 			Files: s.NumFiles,
 			Lines: s.NumLines,
@@ -67,7 +69,7 @@ func PrintWalkerStats(kgn *engine.KunlunEngine) {
 
 }
 
-type LanguageWithStats struct {
+type languageWithStats struct {
 	Lang  string
 	Files int
 	Lines int

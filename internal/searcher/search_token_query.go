@@ -2,6 +2,7 @@ package searcher
 
 import "github.com/huichen/kunlun/internal/query"
 
+// 搜索单串（简单字符串，非正则表达式）
 func (schr *Searcher) searchTokenQuery(context *Context, q *query.Query) error {
 	if q == nil {
 		return nil

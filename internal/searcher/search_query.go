@@ -7,8 +7,9 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 封装了搜索表达式解析得到的信息
 type SearchQuery struct {
-	// 用户输入中解析出来的搜索表达式
+	// 原始搜索表达式
 	OriginalQuery *query.Query
 
 	// 从 OriginalQuery 中提取的搜索表达式

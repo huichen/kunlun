@@ -8,6 +8,8 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 使用表达式对仓库做检索
+// 表达式为 repo:xxx 的形式，且不做内容或文件名匹配，只搜索匹配的仓库名
 func (schr *Searcher) searchRepos(context *Context) (*types.SearchResponse, error) {
 	repoQuery := context.query.RepoQuery
 

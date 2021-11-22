@@ -72,6 +72,7 @@ func (c *Context) getSearchRegexRequest(q *query.Query, computedQuery *query.Que
 	}, nil
 }
 
+// 在一次搜索中检查是否超时，如果超时则返回 err，上游收到后会立刻返回或者做简化处理
 func (context *Context) checkTimeout() error {
 	if context.request != nil && context.request.TimeoutInMs > 0 && context.searchStartTime != nil {
 		if time.Since(*context.searchStartTime).Milliseconds() > int64(context.request.TimeoutInMs) {

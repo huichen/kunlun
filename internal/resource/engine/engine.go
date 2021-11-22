@@ -1,3 +1,4 @@
+// 仅供 KWS 使用的资源句柄
 package engine
 
 import (
