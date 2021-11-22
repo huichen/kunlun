@@ -29,8 +29,8 @@ package main
 import (
 	"flag"
 
-	"github.com/huichen/github.com/huichen/kunlun/pkg/engine"
-	"github.com/huichen/github.com/huichen/kunlun/pkg/types"
+	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/types"
 )
 
 var (
