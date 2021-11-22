@@ -1,6 +1,6 @@
 package query
 
-// 深度优先给 query 逐级更新 ID 和统计信息等
+// 用深度优先的遍历顺序给 query 逐级更新 ID 和统计信息等
 func UpdateStats(query *Query) {
 	if query == nil {
 		return

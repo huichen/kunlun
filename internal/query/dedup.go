@@ -3,7 +3,7 @@ package query
 // 对 query 逐级去重，比如
 // 		a AND b AND a -> a AND b
 //		a AND (c OR b) AND d AND (b OR c) -> a AND d AND (b OR c)
-func Dedup(query *Query) bool {
+func dedup(query *Query) bool {
 	if query == nil {
 		return false
 	}

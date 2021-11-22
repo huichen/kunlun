@@ -14,7 +14,7 @@ func Flatten(query *Query) *Query {
 	flattened := true
 	dedupped := true
 	for flattened || dedupped {
-		dedupped = Dedup(query)
+		dedupped = dedup(query)
 		flattened = internalFlatten(query)
 	}
 

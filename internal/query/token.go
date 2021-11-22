@@ -1,6 +1,6 @@
 package query
 
-// 从查询表达式树中获得所有的 tokens，包括了正则表达式中的 tokens
+// 从查询表达式树中获得所有的 tokens，包括了正则表达式中拆分出来的单串
 // 返回结果做了去重
 func (query *Query) GetTokens() []string {
 	tokens := internalGetTokens(query)

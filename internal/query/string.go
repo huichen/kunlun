@@ -30,7 +30,7 @@ func (query *Query) String() string {
 }
 
 func (query *Query) compactString() string {
-	retStr := query.FullDebugString(true, false, false)
+	retStr := query.fullDebugString(true, false, false)
 
 	return retStr
 }
@@ -40,7 +40,7 @@ func (query *Query) debugString() string {
 		return ""
 	}
 
-	dbgString := query.FullDebugString(false, false, false)
+	dbgString := query.fullDebugString(false, false, false)
 
 	return dbgString
 }
@@ -51,10 +51,10 @@ func (query *Query) setCompactString() {
 		return
 	}
 
-	query.FullDebugString(true, false, true)
+	query.fullDebugString(true, false, true)
 }
 
-func (query *Query) FullDebugString(compact bool, showStats bool, set bool) string {
+func (query *Query) fullDebugString(compact bool, showStats bool, set bool) string {
 	if query == nil {
 		return ""
 	}
@@ -86,7 +86,7 @@ func (query *Query) FullDebugString(compact bool, showStats bool, set bool) stri
 	case TreeQuery:
 		var subStrs []string
 		for _, q := range query.SubQueries {
-			qStr := q.FullDebugString(compact, showStats, set)
+			qStr := q.fullDebugString(compact, showStats, set)
 			if qStr != "" {
 				subStrs = append(subStrs, qStr)
 			}

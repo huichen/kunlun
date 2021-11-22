@@ -7,7 +7,7 @@ func Copy(query *Query) *Query {
 	}
 
 	retQuery := &Query{}
-	CopyTo(query, retQuery)
+	copyTo(query, retQuery)
 
 	if query.SubQueries == nil {
 		retQuery.SubQueries = nil
@@ -21,7 +21,7 @@ func Copy(query *Query) *Query {
 	return retQuery
 }
 
-func CopyTo(src *Query, dst *Query) {
+func copyTo(src *Query, dst *Query) {
 	if src == nil || dst == nil {
 		return
 	}

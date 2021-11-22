@@ -17,6 +17,7 @@ var (
 	}
 )
 
+// 对 query 的各级进行排序，排序规则参见 internalSort 函数中注释
 func Sort(q *Query) *Query {
 	if q == nil {
 		return nil
