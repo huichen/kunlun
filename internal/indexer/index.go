@@ -1,7 +1,6 @@
 package indexer
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/huichen/kunlun/pkg/log"
@@ -12,14 +11,13 @@ var (
 	logger = log.GetLogger()
 )
 
-// 将 path 指定的文件添加到索引
+// 将 info 指定的文件添加到索引
 // 如果该文件不存在于索引中，会给该文件分配一个自增的文档 ID
 // 如果文件已经存在，则返回错误
-//
 // 该函数协程安全，请尽可能并发调用
 func (indexer *Indexer) IndexFile(content []byte, info types.IndexFileInfo) error {
 	if indexer.finished {
-		return errors.New("indexer 已经完成索引")
+		logger.Fatal("indexer 已经完成索引，请勿再添加")
 	}
 
 	path := info.Path
@@ -125,9 +123,10 @@ func (indexer *Indexer) contentIndexWorker(shard int) {
 		indexer.documentIndexed++
 		indexer.indexerLock.Unlock()
 
+		// 当单 shard 索引文档数超过一定阈值时，新增一个 shard 然后退出本 shard
 		numDocsProcessed++
 		if indexer.maxDocsPerShard != 0 && numDocsProcessed > indexer.maxDocsPerShard {
-			indexer.IncreaseShard()
+			indexer.increaseShard()
 			break
 		}
 	}

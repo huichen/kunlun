@@ -11,6 +11,7 @@ type SearchFileResponse struct {
 	Documents []types.SearchedDocument
 }
 
+// 在索引中通过通过外部传入的 DocFilter 钩子函数搜索文件名
 func (indexer *Indexer) SearchFile(request *SearchFileRequest) SearchFileResponse {
 	retDocIDs := []types.SearchedDocument{}
 	for _, meta := range indexer.documentIDToMetaMap {
@@ -21,10 +22,12 @@ func (indexer *Indexer) SearchFile(request *SearchFileRequest) SearchFileRespons
 				lang = meta.Language.Name
 			}
 
+			// 文件名优先使用仓库内路径
 			filename := meta.PathInRepo
 			if filename == "" {
 				filename = meta.LocalPath
 			}
+
 			retDocIDs = append(retDocIDs, types.SearchedDocument{
 				DocumentID: meta.DocumentID,
 				Language:   lang,

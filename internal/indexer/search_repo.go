@@ -9,6 +9,7 @@ type SearchRepoResponse struct {
 	Repos []*CodeRepository
 }
 
+// 利用外部钩子函数 RepoFilter 搜索匹配的仓库
 func (indexer *Indexer) SearchRepos(request *SearchRepoRequest) SearchRepoResponse {
 	retRepoIDs := []*CodeRepository{}
 	for repoID, repo := range indexer.idToRepoMap {

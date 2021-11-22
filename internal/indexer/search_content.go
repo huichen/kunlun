@@ -7,6 +7,14 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 使用 key1、key2 以及他们之间的距离 distance 在索引中查询满足条件的文档及分段的起始位置
+// 分段需要匹配 keyword，同时 key1 在分段中的开始位置为 offset
+// 参数：
+//		key2：当为零时，只对 key1 做单键匹配
+//		distance: 当且仅当 key2 为零时该值为零
+//		caseSensitive：匹配时是否考虑大小写
+//		isSymbol：如果为 true 则在符号索引中搜索，否则在全文索引搜索
+//		shouldDocBeRecalled：外部钩子函数，用于判断某个文档 ID 是否应该被召回
 func (indexer *Indexer) searchContent(
 	keyword []byte,
 	offset uint32,
@@ -17,17 +25,17 @@ func (indexer *Indexer) searchContent(
 	isSymbol bool,
 	shouldDocBeRecalled func(uint64) bool,
 ) ([]types.DocumentWithSections, error) {
-	responseChan := make(chan ContentSearchResponseInfo, indexer.numIndexerShards)
+	responseChan := make(chan contentSearchResponseInfo, indexer.numIndexerShards)
 
 	// 启动搜索协程
-	requestChan := make(chan ContentSearchRequestInfo, indexer.numIndexerShards)
+	requestChan := make(chan contentSearchRequestInfo, indexer.numIndexerShards)
 	for i := 0; i < indexer.numIndexerShards; i++ {
 		go indexer.contentSearchWorker(i, requestChan, responseChan)
 	}
 
 	// 发送搜索请求
 	for i := 0; i < indexer.numIndexerShards; i++ {
-		requestChan <- ContentSearchRequestInfo{
+		requestChan <- contentSearchRequestInfo{
 			Keyword:             keyword,
 			Offset:              offset,
 			Key1:                key1,
@@ -61,11 +69,12 @@ func (indexer *Indexer) searchContent(
 
 	sort.Sort(ngram_index.SortDocumentWithLocations(retDocs))
 
-	return DocLocationsToSections(retDocs, uint32(len(keyword))), nil
+	return docLocationsToSections(retDocs, uint32(len(keyword))), nil
 
 }
 
-type ContentSearchRequestInfo struct {
+// 用于向内容查询线程发送请求
+type contentSearchRequestInfo struct {
 	Keyword             []byte
 	Offset              uint32
 	Key1                ngram_index.IndexKey
@@ -76,15 +85,17 @@ type ContentSearchRequestInfo struct {
 	ShouldDocBeRecalled func(uint64) bool
 }
 
-type ContentSearchResponseInfo struct {
+// 用于从内容查询线程接受请求
+type contentSearchResponseInfo struct {
 	Err                    error
 	DocumentsWithLocations []ngram_index.DocumentWithLocations
 }
 
+// 内容查询线程
 func (indexer *Indexer) contentSearchWorker(
 	shard int,
-	requestChan chan ContentSearchRequestInfo,
-	responseChan chan ContentSearchResponseInfo,
+	requestChan chan contentSearchRequestInfo,
+	responseChan chan contentSearchResponseInfo,
 ) {
 	info := <-requestChan
 	key1 := info.Key1
@@ -95,21 +106,24 @@ func (indexer *Indexer) contentSearchWorker(
 	var contentMatchDocs []ngram_index.DocumentWithLocations
 	var err error
 	var docs []ngram_index.DocumentWithLocations
-	if distance > 0 {
+	if key2 != 0 {
 		docs, err = indexer.contentNgramIndices[shard].SearchTwoKeys(
 			key1, key2, distance, docFilterFunc, info.IsSymbol)
 	} else {
+		if distance != 0 {
+			logger.Fatal("key2 为 0 时 distance 必须也为 0")
+		}
 		// 单键的情况
 		docs, err = indexer.contentNgramIndices[shard].SearchOneKey(key1, docFilterFunc, info.IsSymbol)
 	}
 	if err != nil {
-		responseChan <- ContentSearchResponseInfo{
+		responseChan <- contentSearchResponseInfo{
 			Err: err,
 		}
 		return
 	}
 	if info.Keyword == nil {
-		responseChan <- ContentSearchResponseInfo{
+		responseChan <- contentSearchResponseInfo{
 			Err:                    nil,
 			DocumentsWithLocations: docs,
 		}
@@ -119,13 +133,13 @@ func (indexer *Indexer) contentSearchWorker(
 	contentMatchDocs, err = indexer.filterDocumentsWithFullMatch(
 		&(indexer.documentIDToContentMap), docs, info.Offset, info.Keyword, info.CaseSensitive)
 	if err != nil {
-		responseChan <- ContentSearchResponseInfo{
+		responseChan <- contentSearchResponseInfo{
 			Err: err,
 		}
 		return
 	}
 
-	responseChan <- ContentSearchResponseInfo{
+	responseChan <- contentSearchResponseInfo{
 		Err:                    nil,
 		DocumentsWithLocations: contentMatchDocs,
 	}

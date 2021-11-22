@@ -2,8 +2,9 @@ package searcher
 
 import (
 	"errors"
+	"reflect"
+	"sort"
 
-	"github.com/huichen/kunlun/internal/indexer"
 	"github.com/huichen/kunlun/internal/query"
 	"github.com/huichen/kunlun/pkg/types"
 )
@@ -214,7 +215,7 @@ func mergeSections(lines []*[]types.Section) ([]types.Section, error) {
 				preV[i] = v
 			}
 		}
-		indexer.SortAndDedup(&minSections, func(i, j int) bool {
+		sortAndDedup(&minSections, func(i, j int) bool {
 			if minSections[i].Start != minSections[j].Start {
 				return minSections[i].Start < minSections[j].Start
 			}
@@ -225,4 +226,24 @@ func mergeSections(lines []*[]types.Section) ([]types.Section, error) {
 	}
 
 	return ret, nil
+}
+
+// 排序同时做去重操作
+func sortAndDedup(slicePtr interface{}, less func(i, j int) bool) {
+	v := reflect.ValueOf(slicePtr).Elem()
+	if v.Len() <= 1 {
+		return
+	}
+	sort.Slice(v.Interface(), less)
+
+	i := 0
+	for j := 1; j < v.Len(); j++ {
+		if !less(i, j) {
+			continue
+		}
+		i++
+		v.Index(i).Set(v.Index(j))
+	}
+	i++
+	v.SetLen(i)
 }

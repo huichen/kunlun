@@ -1,5 +1,6 @@
 package indexer
 
+// 文档元信息
 type DocumentMeta struct {
 	DocumentID uint64
 	Size       uint64

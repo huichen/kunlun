@@ -6,7 +6,8 @@ const (
 	Atoa = 32
 )
 
-// Token 是一个单串
+// 通过单串（token）搜索文档
+// 单串指的是非正则表达式的简单字符串，可以是文本中单串也可以是符号（变量、方法名等）
 type SearchTokenRequest struct {
 	// 搜索关键词
 	Token string

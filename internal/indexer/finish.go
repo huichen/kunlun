@@ -5,7 +5,12 @@ import (
 	"time"
 )
 
+// 在开始检索前必须先调用这个函数
 func (indexer *Indexer) Finish() {
+	if indexer.finished {
+		logger.Fatal("Finish 函数不能两次调用")
+	}
+
 	// 等待索引完成
 	for indexer.documentCounter > indexer.documentIndexed {
 		time.Sleep(time.Millisecond)

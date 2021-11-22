@@ -104,7 +104,7 @@ func NewIndexer(options *types.IndexerOptions) *Indexer {
 	return &indexer
 }
 
-func (indexer *Indexer) IncreaseShard() {
+func (indexer *Indexer) increaseShard() {
 	indexer.indexerLock.Lock()
 	shard := indexer.numIndexerShards
 	indexer.numIndexerShards++

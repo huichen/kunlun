@@ -31,5 +31,5 @@ func TestSearchUtils(t *testing.T) {
 			DocumentID: 2,
 			Sections:   []types.Section{{11, 14}, {13, 16}, {24, 27}},
 		},
-	}, DocLocationsToSections(docs, 3))
+	}, docLocationsToSections(docs, 3))
 }

@@ -100,7 +100,7 @@ func (indexer *Indexer) internalSearchRegex(request SearchRegexRequest) ([]types
 	// 通过检索局部关键词，得到一个较小的候选集
 	docIDs := []uint64{}
 	runSearch := false
-	var matchedDocs []DocumentWithLines
+	var matchedDocs []documentWithLines
 	if request.CandidateDocs == nil || !request.Negate {
 		var err error
 		matchedDocs, err = indexer.searchMultiTokens(
@@ -133,7 +133,7 @@ func (indexer *Indexer) internalSearchRegex(request SearchRegexRequest) ([]types
 // 这个操作很昂贵，请尽可能缩小 docIDs 的范围
 func (indexer *Indexer) searchRegexInDocs(
 	includeDocIDs *[]uint64,
-	matchedDocs []DocumentWithLines,
+	matchedDocs []documentWithLines,
 	excludeDocIDs map[uint64]bool,
 	regex string,
 	negate bool,

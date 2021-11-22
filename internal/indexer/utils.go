@@ -1,14 +1,12 @@
 package indexer
 
 import (
-	"reflect"
-	"sort"
-
 	"github.com/huichen/kunlun/internal/ngram_index"
 	"github.com/huichen/kunlun/pkg/types"
 )
 
-func DocLocationsToSections(docs []ngram_index.DocumentWithLocations, length uint32) []types.DocumentWithSections {
+// 将文档中的起始位置数组转化成分段区间数组，分段长度等于 length
+func docLocationsToSections(docs []ngram_index.DocumentWithLocations, length uint32) []types.DocumentWithSections {
 	ret := make([]types.DocumentWithSections, len(docs))
 	for idDoc, doc := range docs {
 		sections := make([]types.Section, len(doc.StartLocations))
@@ -41,23 +39,4 @@ func min(a, b uint32) uint32 {
 	}
 
 	return a
-}
-
-func SortAndDedup(slicePtr interface{}, less func(i, j int) bool) {
-	v := reflect.ValueOf(slicePtr).Elem()
-	if v.Len() <= 1 {
-		return
-	}
-	sort.Slice(v.Interface(), less)
-
-	i := 0
-	for j := 1; j < v.Len(); j++ {
-		if !less(i, j) {
-			continue
-		}
-		i++
-		v.Index(i).Set(v.Index(j))
-	}
-	i++
-	v.SetLen(i)
 }

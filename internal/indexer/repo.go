@@ -20,6 +20,10 @@ type CodeRepository struct {
 
 // 将代码仓库添加到索引
 func (indexer *Indexer) IndexRepo(info types.IndexRepoInfo) error {
+	if indexer.finished {
+		logger.Fatal("indexer 已经完成索引，请勿再添加")
+	}
+
 	indexer.indexerLock.Lock()
 	defer indexer.indexerLock.Unlock()
 

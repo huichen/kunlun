@@ -1,12 +1,12 @@
 package indexer
 
 // 对两个有序数组取交集，如果第二个数组为空，则返回第一个数组
-func andMerge(docID1 []uint64, docID2 []DocumentWithLines) []DocumentWithLines {
+func andMerge(docID1 []uint64, docID2 []documentWithLines) []documentWithLines {
 	if len(docID2) == 0 || len(docID1) == 0 {
 		return docID2
 	}
 
-	retIDs := []DocumentWithLines{}
+	retIDs := []documentWithLines{}
 
 	var index1, index2 int
 	for index1 < len(docID1) && index2 < len(docID2) {

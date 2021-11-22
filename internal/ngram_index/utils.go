@@ -76,7 +76,7 @@ func StringToIndexKey(str string) (IndexKey, error) {
 	return BytesToIndexKey([]byte(str))
 }
 
-// rune 数组转为 index key
+// rune 数组转为 index key，使用尽可能多的 rune（不超过 3 个）
 func RuneSliceToIndexKey(runes []rune) (IndexKey, error) {
 	if len(runes) == 0 {
 		return 0, errors.New("字符串中的 rune 个数不能为 0")

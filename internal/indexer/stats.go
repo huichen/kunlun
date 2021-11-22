@@ -2,6 +2,7 @@ package indexer
 
 import "github.com/huichen/kunlun/pkg/types"
 
+// 返回索引统计信息
 func (indexer *Indexer) GetStats() types.IndexerStats {
 	indexer.indexerLock.RLock()
 	defer indexer.indexerLock.RUnlock()

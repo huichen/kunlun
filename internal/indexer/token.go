@@ -8,6 +8,9 @@ import (
 	"github.com/huichen/kunlun/internal/ngram_index"
 )
 
+// 从 token 得到两个搜索键和他们的距离，这两个搜索键是所有搜索键中频率最低的
+// 如果 token 包含小于三个 rune，则返回一个搜索键（第二个为 0)
+// 返回的第一个参数为 key1 在 token 中的起始位置
 func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.IndexKey, ngram_index.IndexKey, uint32) {
 	lowerCaseKeyword := []byte(strings.ToLower(token))
 	runes := ngram_index.DecodeRunes(lowerCaseKeyword)
@@ -16,7 +19,7 @@ func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.I
 	}
 
 	keyMap := make(map[ngram_index.IndexKey]Range)
-	keys := []KeyWithFrequency{}
+	keys := []keyWithFrequency{}
 	iStart := uint32(0)
 	for len(runes) > 0 {
 		key, _ := ngram_index.RuneSliceToIndexKey(runes)
@@ -25,9 +28,9 @@ func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.I
 				Start: iStart,
 				End:   iStart,
 			}
-			keys = append(keys, KeyWithFrequency{
+			keys = append(keys, keyWithFrequency{
 				Key:  key,
-				Freq: indexer.GetKeyFrequency(key),
+				Freq: indexer.getKeyFrequency(key),
 			})
 		} else {
 			r := keyMap[key]
@@ -64,7 +67,7 @@ type Range struct {
 	End   uint32
 }
 
-type KeyWithFrequency struct {
+type keyWithFrequency struct {
 	Key  ngram_index.IndexKey
 	Freq uint64
 }

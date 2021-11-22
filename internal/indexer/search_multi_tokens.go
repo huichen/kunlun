@@ -6,7 +6,7 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
-type DocumentWithLines struct {
+type documentWithLines struct {
 	DocumentID uint64
 
 	Lines []uint32
@@ -20,7 +20,7 @@ func (indexer *Indexer) searchMultiTokens(
 	tokens []string,
 	caseSensitive bool,
 	shouldDocBeRecalled func(uint64) bool,
-) ([]DocumentWithLines, error) {
+) ([]documentWithLines, error) {
 	if len(tokens) == 0 {
 		// 这和返回空数组（没有匹配的文档）不是一个概念，因此报错
 		return nil, errors.New("tokens 不能为空")
@@ -46,14 +46,14 @@ func (indexer *Indexer) searchMultiTokens(
 }
 
 // 多个搜索结果取行交集
-func (indexer *Indexer) mergeResults(results []*[]types.DocumentWithSections) ([]DocumentWithLines, error) {
+func (indexer *Indexer) mergeResults(results []*[]types.DocumentWithSections) ([]documentWithLines, error) {
 	if len(results) == 0 {
 		return nil, nil
 	}
 
 	pointers := make([]int, len(results))
 	preDocIDs := make([]uint64, len(results))
-	ret := []DocumentWithLines{}
+	ret := []documentWithLines{}
 
 	for {
 		// 第一步：找到各个数组头部的最小值
@@ -111,7 +111,7 @@ func (indexer *Indexer) mergeResults(results []*[]types.DocumentWithSections) ([
 
 			if len(ret) == 0 || ret[len(ret)-1].DocumentID != min {
 				if len(lines) > 0 {
-					ret = append(ret, DocumentWithLines{
+					ret = append(ret, documentWithLines{
 						DocumentID: min,
 						Lines:      lines,
 					})
