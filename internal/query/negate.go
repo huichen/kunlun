@@ -1,8 +1,8 @@
 package query
 
-// 将树状表达式中的 NOT 条件逐级下放到 term 级别
+// 将树状表达式中的 NOT 条件逐级下放到叶子节点
 // 比如
-// (not (a or b and c)) -> (not a and (not b or not c))
+// -(a or -b and c) -> (-a and (b or -c))
 func populateDownNegate(query *Query, negate bool) {
 	if query == nil {
 		return

@@ -7,7 +7,7 @@ import (
 )
 
 // 解析单 term
-// term 可以是一个 token，或者正则表达式，或者 wildcard
+// term 可以是一个 token，或者正则表达式
 func parseTerm(term string) (*Query, error) {
 	if len(term) == 0 {
 		return nil, nil
