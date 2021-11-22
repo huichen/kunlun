@@ -447,7 +447,9 @@ export default {
     simplifyRepo(path) {
       let fields = path.split(":");
       if (fields.length == 2) {
-        return fields[1];
+        let repo = fields[1];
+        repo = repo.replace(/^\/*/g, "");
+        return repo;
       }
       return path;
     },
