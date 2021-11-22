@@ -1,5 +1,6 @@
 package kls
 
+// 重绘左侧仓库列表
 func (kls *KLS) redrawRepoList() {
 	if kls.response == nil {
 		return

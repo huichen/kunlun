@@ -1,3 +1,4 @@
+// 设置了按键绑定功能
 package kls
 
 import "github.com/gdamore/tcell/v2"

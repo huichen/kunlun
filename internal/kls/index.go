@@ -9,6 +9,7 @@ import (
 	"github.com/huichen/kunlun/pkg/types"
 )
 
+// 启动时创建索引
 func (kls *KLS) buildIndex() {
 	kls.printSuggestion("%s", "[yellow]索引创建中，请稍等 ...")
 

@@ -13,6 +13,7 @@ const (
 	omitAfterChars = 300
 )
 
+// 重新绘制右侧的文件内容展示窗口
 func (kls *KLS) redrawFileContent() {
 	if kls.response == nil {
 		return

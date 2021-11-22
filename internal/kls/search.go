@@ -11,6 +11,7 @@ const (
 	maxDocumentsPerRepo = 100
 )
 
+// 调用昆仑做搜索，并触发各个窗口的重绘
 func (kls *KLS) search() {
 	if kls.inSearching {
 		kls.printSuggestion("检索中，请勿重复搜索", "")

@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// 重新绘制左边的文件列表窗口
 func (kls *KLS) redrawFileList() {
 	if kls.response == nil || len(kls.response.Repos) == 0 {
 		return
