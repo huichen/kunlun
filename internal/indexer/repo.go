@@ -37,8 +37,20 @@ func (indexer *Indexer) IndexRepo(info types.IndexRepoInfo) error {
 	// 更新 repo 计数
 	indexer.repoCounter++
 
+	// 当外部传入 repoID 时，使用外部 ID
+	repoID := indexer.repoCounter
+	if info.RepoID != 0 {
+		if _, ok := indexer.idToRepoMap[info.RepoID]; ok {
+			return fmt.Errorf("代码仓库 ID %d 已经存在，请勿重复添加", info.RepoID)
+		}
+		repoID = info.RepoID
+		if indexer.repoCounter <= repoID {
+			indexer.repoCounter = repoID + 1
+		}
+	}
+
 	repo := &CodeRepository{
-		ID:        indexer.repoCounter,
+		ID:        repoID,
 		LocalPath: localPath,
 		RemoteURL: remoteURL,
 	}

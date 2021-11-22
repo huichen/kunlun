@@ -24,9 +24,9 @@ func TestDocFilter(t *testing.T) {
 	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_b/file_d"})
 	idxr.IndexFile([]byte("dddd"), types.IndexFileInfo{Path: "repo_c/file_d"})
 	idxr.IndexFile([]byte("bbbb"), types.IndexFileInfo{Path: "repo_c/file_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{"repo_a", "me@git.com:repo_a"})
-	idxr.IndexRepo(types.IndexRepoInfo{"repo_b", "me@git.com:repo_b"})
-	idxr.IndexRepo(types.IndexRepoInfo{"repo_c", "me@git.com:repo_c"})
+	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_a", RepoRemoteURL: "me@git.com:repo_a"})
+	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_b", RepoRemoteURL: "me@git.com:repo_b"})
+	idxr.IndexRepo(types.IndexRepoInfo{RepoLocalPath: "repo_c", RepoRemoteURL: "me@git.com:repo_c"})
 	idxr.Finish()
 
 	q, _ := ParseQuery("repo:repo_a file:b")

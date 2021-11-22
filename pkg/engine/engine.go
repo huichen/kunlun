@@ -87,8 +87,19 @@ func (engine *KunlunEngine) receiveWalkerOutput() {
 				path = file.RepoLocalPath
 			}
 			log.GetLogger().Infof("索引仓库 %s", path)
+
+			// 查找是否存在外部 ID
+			var repoID uint64
+			if id, ok := engine.options.RepoRemoteURLToIDMap[file.RepoRemoteURL]; ok {
+				if id == 0 {
+					log.GetLogger().Fatal("engine.options.RepoRemoteURLToIDMap 不能包含 0 ID")
+				}
+				repoID = id
+			}
+
 			engine.indexer.IndexRepo(
 				types.IndexRepoInfo{
+					RepoID:        repoID,
 					RepoLocalPath: file.RepoLocalPath,
 					RepoRemoteURL: file.RepoRemoteURL,
 				})
