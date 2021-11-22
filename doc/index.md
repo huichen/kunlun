@@ -3,7 +3,7 @@
 
 #### 三元组索引
 
-昆仑使用基于三元组（trigram）的内存索引，比如 "CPU cache" 这个词，会分解成下面的索引键（预先转化为小写）
+昆仑使用基于[三元组（trigram）](https://swtch.com/~rsc/regexp/regexp4.html)的内存索引，比如 "CPU cache" 这个词，会分解成下面的索引键（预先转化为小写）
 
 ```
 cpu
