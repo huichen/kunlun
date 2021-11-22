@@ -10,18 +10,22 @@ const (
 	runeMask = 1<<21 - 1
 )
 
+// trigram -> index key
 func RuneNgramToIndexKey(ngram RuneNgram) IndexKey {
 	return IndexKey(uint64(ngram[0])<<42 | uint64(ngram[1])<<21 | uint64(ngram[2]))
 }
 
+// bigram -> index key
 func RuneBigramToIndexKey(ngram RuneNgram) IndexKey {
 	return IndexKey(uint64(ngram[0])<<42 | uint64(ngram[1])<<21)
 }
 
+// unigram -> index key
 func RuneUnigramToIndexKey(ngram RuneNgram) IndexKey {
 	return IndexKey(uint64(ngram[0]) << 42)
 }
 
+// 为了方便打印显示，将 index key 还原为字符串
 func IndexKeyToString(key IndexKey) string {
 	rune0 := rune((key >> 42) & runeMask)
 	rune1 := rune((key >> 21) & runeMask)
@@ -43,6 +47,7 @@ func IndexKeyToString(key IndexKey) string {
 	return string(runeSlice)
 }
 
+// 添加了制表符转义等，方便密集显示
 func IndexKeyToPrettyString(key IndexKey) string {
 	str := IndexKeyToString(key)
 
@@ -52,6 +57,7 @@ func IndexKeyToPrettyString(key IndexKey) string {
 	return str
 }
 
+// 字节数组转为 ngram
 func BytesToIndexKey(bytes []byte) (IndexKey, error) {
 	rs := DecodeRunes(bytes)
 	if len(rs) > 3 || len(rs) == 0 {
@@ -65,10 +71,12 @@ func BytesToIndexKey(bytes []byte) (IndexKey, error) {
 	return RuneNgramToIndexKey(RuneNgram{rs[0], rs[1], rs[2]}), nil
 }
 
+// BytesToIndexKey 的 string 版本
 func StringToIndexKey(str string) (IndexKey, error) {
 	return BytesToIndexKey([]byte(str))
 }
 
+// rune 数组转为 index key
 func RuneSliceToIndexKey(runes []rune) (IndexKey, error) {
 	if len(runes) == 0 {
 		return 0, errors.New("字符串中的 rune 个数不能为 0")
@@ -80,6 +88,7 @@ func RuneSliceToIndexKey(runes []rune) (IndexKey, error) {
 	return RuneNgramToIndexKey(RuneNgram{runes[0], runes[1], runes[2]}), nil
 }
 
+// 字节数组转为 rune 数组
 func DecodeRunes(content []byte) []rune {
 	ret := []rune{}
 

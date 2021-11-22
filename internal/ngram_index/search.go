@@ -7,6 +7,9 @@ type DocumentWithLocations struct {
 	StartLocations []uint32
 }
 
+// 在索引中检索所有包含 key1 和 key2，且两者距离（头到头）为 distance 的文档和 key1 的起始位置
+// 使用 shouldDocBeRecalled 钩子函数对文档进行过滤
+// 当 isSymbol 为 true 时搜索符号索引表，否则搜索全文索引表
 func (index *NgramIndex) SearchTwoKeys(
 	key1 IndexKey, key2 IndexKey, distance uint32,
 	shouldDocBeRecalled func(uint64) bool,
@@ -91,6 +94,9 @@ func (index *NgramIndex) SearchTwoKeys(
 	return retDocuments, nil
 }
 
+// 在索引中检索所有包含 key 的文档和 key 的起始位置
+// 使用 shouldDocBeRecalled 钩子函数对文档进行过滤
+// 当 isSymbol 为 true 时搜索符号索引表，否则搜索全文索引表
 func (index *NgramIndex) SearchOneKey(
 	key IndexKey,
 	shouldDocBeRetrived func(uint64) bool,
@@ -138,6 +144,8 @@ func (index *NgramIndex) SearchOneKey(
 	return retDocuments, nil
 }
 
+// 两个正序排列的起始位置数组，查找所有 startLocations1 元素，满足：
+// 在 startLocations2 中存在到该元素距离等于 distance 元素
 func findStartLocationWithKeyDistance(startLocations1 []uint32, startLocations2 []uint32, distance uint32) []uint32 {
 	if len(startLocations1) == 0 || len(startLocations2) == 0 {
 		return nil

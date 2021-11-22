@@ -202,6 +202,7 @@ func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entrie
 	return err
 }
 
+// 临时缓存加入反向索引
 func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *map[IndexKey]*[]uint32, isSymbol bool) {
 	index.indexLock.Lock()
 	defer index.indexLock.Unlock()
@@ -283,6 +284,13 @@ func addIndexToCache(key IndexKey, start uint32, cache *map[IndexKey]*[]uint32) 
 	*locations = append(*locations, start)
 }
 
+// 在当前游标位置（startLocation）发生变化时，更新符号相关的计数器，包括
+// 		lineIndex：游标所处的行索引
+//		lineStart：本行在文本中的起始字节位置
+//		entryInLine：当前符号在当前行中的起始位置
+//		entryIndex：当前符号在符号表（entries）中的索引
+//		symbolLength：当前符号的字节长度
+// 除此之外，还返回本文档是否继续添加符号（stopADdingSymbolIndex），和是否添加当前符号（addSymbolIndex）
 func updateSymbolLocations(
 	content []byte, startLocation uint32, lineIndex int, lineStart int, entryInLine int, entryIndex int, entries []*types.CTagsEntry,
 ) (bool, bool, int, int, int, int, int, error) {
