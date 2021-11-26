@@ -18,8 +18,6 @@ import (
 )
 
 var (
-	logger = log.GetLogger()
-
 	repoFolders     = flag.String("repo_folders", "", "半角逗号分隔的本地git仓库地址")
 	staticFolder    = flag.String("static_folder", "fe/dist", "静态文件目录")
 	port            = flag.String("port", ":8080", "端口号")
@@ -40,7 +38,7 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 	go func() {
 		for range c {
-			logger.Info("捕获Ctrl-c，退出服务器")
+			log.GetLogger().Info("捕获Ctrl-c，退出服务器")
 			os.Exit(0)
 		}
 	}()
@@ -71,12 +69,12 @@ func main() {
 		Addr:    *port,
 		Handler: handlers.CompressHandler(m),
 	}
-	logger.Info("服务器启动")
-	logger.Fatal(server.ListenAndServe())
+	log.GetLogger().Info("服务器启动")
+	log.GetLogger().Fatal(server.ListenAndServe())
 }
 
 func buildIndex() {
-	logger.Info("索引开始")
+	log.GetLogger().Info("索引开始")
 	kgn := engine.GetEngine()
 	fields := strings.Split(*repoFolders, ",")
 
@@ -88,7 +86,7 @@ func buildIndex() {
 
 	loc := kgn.GetWalkerStats().TotalLinesOfCode
 	ms := time.Since(startTime).Milliseconds()
-	logger.Infof("索引完毕，耗时 %.3f 秒，共索引 %d 行代码，平均每秒索引 %d 行代码", float32(ms)/1000.0, loc, loc*1000/int(ms))
+	log.GetLogger().Infof("索引完毕，耗时 %.3f 秒，共索引 %d 行代码，平均每秒索引 %d 行代码", float32(ms)/1000.0, loc, loc*1000/int(ms))
 
 	// 打印遍历统计指标
 	util.PrintWalkerStats(kgn)

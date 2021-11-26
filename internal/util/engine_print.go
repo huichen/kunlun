@@ -1,19 +1,19 @@
 package util
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 
 	"github.com/kr/pretty"
 
 	"github.com/huichen/kunlun/pkg/engine"
+	"github.com/huichen/kunlun/pkg/log"
 )
 
 // 打印索引器统计信息
 func PrintIndexerStats(kgn *engine.KunlunEngine) {
 	stats := kgn.GetIndexerStats()
-	fmt.Printf("索引统计：\n"+
+	log.GetLogger().Infof("索引统计：\n"+
 		"索引分片数\t\t%d\n"+
 		"总索引大小\t\t%d MB\n"+
 		"总内容大小\t\t%d MB\n"+
@@ -32,7 +32,7 @@ func PrintWalkerStats(kgn *engine.KunlunEngine) {
 	stats.Languages = nil
 	stats.Message = ""
 	stats.CurrentFile = ""
-	fmt.Printf("遍历统计：\n%# v\n", pretty.Formatter(stats))
+	log.GetLogger().Infof("遍历统计：\n%# v\n", pretty.Formatter(stats))
 
 	stats = kgn.GetWalkerStats()
 	var langStats []languageWithStats
@@ -55,17 +55,18 @@ func PrintWalkerStats(kgn *engine.KunlunEngine) {
 		return strings.Compare(langStats[i].Lang, langStats[j].Lang) < 0
 	})
 
-	fmt.Printf("语言统计（过滤后实际索引的部分）：\n%28s\t文件数\t行数\t字节数\n", "语言")
+	log.GetLogger().Infof("语言统计（过滤后实际索引的部分）：")
+	log.GetLogger().Infof("%28s\t文件数\t行数\t字节数\n", "语言")
 	totalFiles := 0
 	totalLines := 0
 	totalBytes := 0
 	for _, lang := range langStats {
-		fmt.Printf("%28s\t%d\t%d\t%d\n", lang.Lang, lang.Files, lang.Lines, lang.Bytes)
+		log.GetLogger().Infof("%28s\t%d\t%d\t%d\n", lang.Lang, lang.Files, lang.Lines, lang.Bytes)
 		totalFiles += lang.Files
 		totalLines += lang.Lines
 		totalBytes += lang.Bytes
 	}
-	fmt.Printf("%28s\t%d\t%d\t%d\n", "总计", totalFiles, totalLines, totalBytes)
+	log.GetLogger().Infof("%28s\t%d\t%d\t%d\n", "总计", totalFiles, totalLines, totalBytes)
 
 }
 
