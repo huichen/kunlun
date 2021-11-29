@@ -115,3 +115,20 @@ func (indexer *Indexer) increaseShard() {
 
 	go indexer.contentIndexWorker(shard)
 }
+
+func (indexer *Indexer) Close() {
+	for _, idx := range indexer.contentNgramIndices {
+		idx.Close()
+	}
+	indexer.contentNgramIndices = nil
+
+	for k := range indexer.documentIDToContentMap {
+		delete(indexer.documentIDToContentMap, k)
+	}
+	indexer.documentIDToContentMap = nil
+
+	for k := range indexer.documentIDToFilenameMap {
+		delete(indexer.documentIDToFilenameMap, k)
+	}
+	indexer.documentIDToFilenameMap = nil
+}

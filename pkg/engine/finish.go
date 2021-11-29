@@ -22,3 +22,12 @@ func (engine *KunlunEngine) Finish() {
 func (engine *KunlunEngine) IsFinished() bool {
 	return engine.finished
 }
+
+// 关闭引擎释放资源
+func (engine *KunlunEngine) Close() {
+	engine.indexer.Close()
+
+	engine.walker = nil
+	engine.indexer = nil
+	engine.searcher = nil
+}

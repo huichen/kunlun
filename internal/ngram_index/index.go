@@ -340,3 +340,9 @@ continuePoint:
 
 	return stopAddingSymbolIndex, addSymbolIndex, lineIndex, lineStart, entryInLine, entryIndex, symbolLength, err
 }
+
+func (index *NgramIndex) Close() {
+	index.keyFrequencies = nil
+	index.indexMap = nil
+	index.symbolIndexMap = nil
+}
