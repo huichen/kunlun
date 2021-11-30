@@ -12,16 +12,31 @@ const (
 
 // trigram -> index key
 func RuneNgramToIndexKey(ngram RuneNgram) IndexKey {
+	// 去掉空格
+	if ngram[0] == ' ' || ngram[1] == ' ' || ngram[2] == ' ' {
+		return 0
+	}
+
 	return IndexKey(uint64(ngram[0])<<42 | uint64(ngram[1])<<21 | uint64(ngram[2]))
 }
 
 // bigram -> index key
 func RuneBigramToIndexKey(ngram RuneNgram) IndexKey {
+	// 去掉空格
+	if ngram[0] == ' ' || ngram[1] == ' ' {
+		return 0
+	}
+
 	return IndexKey(uint64(ngram[0])<<42 | uint64(ngram[1])<<21)
 }
 
 // unigram -> index key
 func RuneUnigramToIndexKey(ngram RuneNgram) IndexKey {
+	// 去掉空格
+	if ngram[0] == ' ' {
+		return 0
+	}
+
 	return IndexKey(uint64(ngram[0]) << 42)
 }
 

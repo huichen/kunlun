@@ -269,6 +269,9 @@ func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *SingleDocInde
 }
 
 func addIndexToCache(key IndexKey, start uint32, cache *SingleDocIndexMap) {
+	if key == 0 {
+		return
+	}
 	cache.insert(key, start)
 }
 
