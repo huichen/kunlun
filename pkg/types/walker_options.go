@@ -60,7 +60,7 @@ func NewIndexWalkerOptions() *IndexWalkerOptions {
 		IgnoreDirs:               make(map[string]bool),
 		FilterDotPrefix:          true,
 		NumFileProcessors:        runtime.NumCPU() * 2,
-		AllowedRepoRemoteURLs:    make(map[string]bool),
+		AllowedRepoRemoteURLs:    nil,
 	}
 }
 
