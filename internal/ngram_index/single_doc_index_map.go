@@ -58,10 +58,11 @@ func (im *SingleDocIndexMap) insert(key IndexKey, loc uint32) {
 		}
 		return
 	}
+	locations := im.index[idx].locations
 
-	if (*im.index[idx].locations)[len(*im.index[idx].locations)-1] >= loc {
+	if (*locations)[len(*locations)-1] >= loc {
 		logger.Fatal("不能插入一个比最后一个元素小的元素")
 	}
 
-	*im.index[idx].locations = append(*im.index[idx].locations, loc)
+	*locations = append(*locations, loc)
 }

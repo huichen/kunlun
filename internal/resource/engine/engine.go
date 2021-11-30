@@ -24,6 +24,7 @@ var (
 	indexShards          = flag.Int("shards", 0, "检索器分片，设置为 0 则使用全部 CPU")
 	disallowedLanguages  = flag.String("dis_langs", "svg", "语言黑名单，半角逗号分隔")
 	disallowedExtensions = flag.String("dis_exts", "svg", "后缀黑名单，半角逗号分隔")
+	skipBiAndUnigram     = flag.Bool("skip_gram", false, "是否忽略索引 bigram 和 unigram")
 )
 
 func Init() {
@@ -42,7 +43,9 @@ func Init() {
 
 	// 索引器选项
 	indexerOptions := types.NewIndexerOptions().
-		SetNumIndexerShards(*indexShards)
+		SetNumIndexerShards(*indexShards).
+		SetSkipIndexBigram(*skipBiAndUnigram).
+		SetSkipIndexUnigram(*skipBiAndUnigram)
 
 	// 检索器选项
 	searcherOptions := types.NewSearcherOptions()
