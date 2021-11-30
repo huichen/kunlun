@@ -80,8 +80,8 @@ func (index *NgramIndex) SearchTwoKeys(
 
 		// ID 相同的情况
 		locations := findStartLocationWithKeyDistance(
-			(*documents1)[doc1Index].SortedStartLocations,
-			(*documents2)[doc2Index].SortedStartLocations,
+			*(*documents1)[doc1Index].SortedStartLocations,
+			*(*documents2)[doc2Index].SortedStartLocations,
 			distance,
 		)
 
@@ -151,7 +151,7 @@ func (index *NgramIndex) SearchOneKey(
 
 		retDocuments = append(retDocuments, DocumentWithLocations{
 			DocumentID:     docID,
-			StartLocations: doc.SortedStartLocations,
+			StartLocations: *doc.SortedStartLocations,
 		})
 	}
 

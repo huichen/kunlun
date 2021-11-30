@@ -10,7 +10,7 @@ func TestIndexMap(t *testing.T) {
 	im := IndexMap{}
 	im.insert(2, KeyedDocument{
 		DocumentID:           2,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 
 	idx, found := im.find(1)
@@ -27,26 +27,26 @@ func TestIndexMap(t *testing.T) {
 
 	im.insert(2, KeyedDocument{
 		DocumentID:           1,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(im.index[0].documents)
 
 	im.insert(2, KeyedDocument{
 		DocumentID:           3,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(im.index[0].documents)
 
 	im.insert(1, KeyedDocument{
 		DocumentID:           3,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(im.index[0].documents)
 	logger.Info(im.index[1].documents)
 
 	im.insert(3, KeyedDocument{
 		DocumentID:           3,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(im.index[0].documents)
 	logger.Info(im.index[1].documents)
@@ -58,7 +58,7 @@ func TestSortedDocuments(t *testing.T) {
 
 	documents.insert(KeyedDocument{
 		DocumentID:           2,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(documents)
 
@@ -76,13 +76,13 @@ func TestSortedDocuments(t *testing.T) {
 
 	documents.insert(KeyedDocument{
 		DocumentID:           1,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(documents)
 
 	documents.insert(KeyedDocument{
 		DocumentID:           3,
-		SortedStartLocations: []uint32{3, 4},
+		SortedStartLocations: &[]uint32{3, 4},
 	})
 	logger.Info(documents)
 

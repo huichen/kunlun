@@ -58,7 +58,7 @@ type KeyedDocument struct {
 	DocumentID uint64
 
 	// IndexKey 在该文档中的所有起始位置，按照升序排列
-	SortedStartLocations []uint32
+	SortedStartLocations *[]uint32
 }
 
 // 按照 DocumentID 正序排列的数组
@@ -86,8 +86,8 @@ func (index *NgramIndex) IndexDocument(
 	entries := data.SymbolEntries
 
 	// 临时缓存，从文档中获得后一次性加入索引
-	indexCache := make(map[IndexKey]*[]uint32)
-	symbolIndexCache := make(map[IndexKey]*[]uint32)
+	indexCache := SingleDocIndexMap{}
+	symbolIndexCache := SingleDocIndexMap{}
 
 	var ngram RuneNgram
 	var ngramSize [3]int
@@ -235,11 +235,14 @@ func (index *NgramIndex) IndexDocument(
 }
 
 // 临时缓存加入反向索引
-func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *map[IndexKey]*[]uint32, isSymbol bool) {
+func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *SingleDocIndexMap, isSymbol bool) {
 	index.indexLock.Lock()
 	defer index.indexLock.Unlock()
 
-	for key, locations := range *cache {
+	for i := range cache.index {
+		key := cache.index[i].key
+		locations := cache.index[i].locations
+
 		// 仅对 index cache 添加 key frequency
 		if !isSymbol {
 			if _, ok := index.keyFrequencies[key]; ok {
@@ -254,28 +257,19 @@ func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *map[IndexKey]
 		if !isSymbol {
 			index.indexMap.insert(key, KeyedDocument{
 				DocumentID:           documentID,
-				SortedStartLocations: *locations,
+				SortedStartLocations: locations,
 			})
 		} else {
 			index.symbolIndexMap.insert(key, KeyedDocument{
 				DocumentID:           documentID,
-				SortedStartLocations: *locations,
+				SortedStartLocations: locations,
 			})
 		}
 	}
 }
 
-func addIndexToCache(key IndexKey, start uint32, cache *map[IndexKey]*[]uint32) {
-	var locations *[]uint32
-	var ok bool
-	if locations, ok = (*cache)[key]; !ok {
-		// key 不存在的情况
-		locs := []uint32{start}
-		(*cache)[key] = &locs
-		return
-	}
-
-	*locations = append(*locations, start)
+func addIndexToCache(key IndexKey, start uint32, cache *SingleDocIndexMap) {
+	cache.insert(key, start)
 }
 
 // 在当前游标位置（startLocation）发生变化时，更新符号相关的计数器，包括

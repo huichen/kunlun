@@ -31,7 +31,7 @@ func TestIndexDocument(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -65,7 +65,7 @@ func TestIndexShortDocument(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -97,7 +97,7 @@ func TestIndexShortDocument(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -129,7 +129,7 @@ func TestIndexShortDocument(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -190,7 +190,7 @@ func TestIndexCTags(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 	sort.Sort(SortLocsWithKey(locations))
@@ -230,7 +230,7 @@ func TestIndexSkip(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 	sort.Sort(SortLocsWithKey(locations))
@@ -274,7 +274,7 @@ func TestIndexCTagsMismatch(t *testing.T) {
 		}
 		locations = append(locations, LocsWithKey{
 			Key:       v.key,
-			Locations: (*v.documents)[0].SortedStartLocations,
+			Locations: *(*v.documents)[0].SortedStartLocations,
 		})
 	}
 	sort.Sort(SortLocsWithKey(locations))
