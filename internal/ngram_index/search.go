@@ -19,23 +19,34 @@ func (index *NgramIndex) SearchTwoKeys(
 	defer index.indexLock.RUnlock()
 
 	var documents1, documents2 *SortedKeyedDocuments
-	var ok bool
 
 	// 对 key1 或者 key2 找不到文档的特殊情况做处理
 	if isSymbol {
-		if documents1, ok = index.symbolIndexMap[key1]; !ok {
+		idx1, found1 := index.symbolIndexMap.find(key1)
+		if !found1 {
 			return nil, nil
 		}
-		if documents2, ok = index.symbolIndexMap[key2]; !ok {
+
+		idx2, found2 := index.symbolIndexMap.find(key2)
+		if !found2 {
 			return nil, nil
 		}
+
+		documents1 = index.symbolIndexMap.index[idx1].documents
+		documents2 = index.symbolIndexMap.index[idx2].documents
 	} else {
-		if documents1, ok = index.indexMap[key1]; !ok {
+		idx1, found1 := index.indexMap.find(key1)
+		if !found1 {
 			return nil, nil
 		}
-		if documents2, ok = index.indexMap[key2]; !ok {
+
+		idx2, found2 := index.indexMap.find(key2)
+		if !found2 {
 			return nil, nil
 		}
+
+		documents1 = index.indexMap.index[idx1].documents
+		documents2 = index.indexMap.index[idx2].documents
 	}
 	for len(*documents1) == 0 || len(*documents2) == 0 {
 		return nil, nil
@@ -106,17 +117,20 @@ func (index *NgramIndex) SearchOneKey(
 	defer index.indexLock.RUnlock()
 
 	var documents *SortedKeyedDocuments
-	var ok bool
 
 	// 对 key1 或者 key2 找不到文档的特殊情况做处理
 	if isSymbol {
-		if documents, ok = index.symbolIndexMap[key]; !ok {
+		idx, found := index.symbolIndexMap.find(key)
+		if !found {
 			return nil, nil
 		}
+		documents = index.symbolIndexMap.index[idx].documents
 	} else {
-		if documents, ok = index.indexMap[key]; !ok {
+		idx, found := index.indexMap.find(key)
+		if !found {
 			return nil, nil
 		}
+		documents = index.indexMap.index[idx].documents
 	}
 	for len(*documents) == 0 {
 		return nil, nil

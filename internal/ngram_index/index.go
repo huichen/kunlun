@@ -3,7 +3,6 @@ package ngram_index
 import (
 	"bytes"
 	"errors"
-	"sort"
 	"sync"
 	"unicode/utf8"
 
@@ -26,8 +25,8 @@ type NgramIndex struct {
 	indexLock sync.RWMutex
 
 	// 反向索引
-	indexMap       map[IndexKey]*SortedKeyedDocuments
-	symbolIndexMap map[IndexKey]*SortedKeyedDocuments
+	indexMap       IndexMap
+	symbolIndexMap IndexMap
 
 	// 保存 IndexKey frequency
 	keyFrequencies map[IndexKey]uint64
@@ -67,8 +66,6 @@ type SortedKeyedDocuments []KeyedDocument
 
 func NewNgramIndex() *NgramIndex {
 	return &NgramIndex{
-		indexMap:       make(map[IndexKey]*SortedKeyedDocuments),
-		symbolIndexMap: make(map[IndexKey]*SortedKeyedDocuments),
 		keyFrequencies: make(map[IndexKey]uint64),
 	}
 }
@@ -242,13 +239,6 @@ func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *map[IndexKey]
 	index.indexLock.Lock()
 	defer index.indexLock.Unlock()
 
-	needSort := false
-	if documentID <= index.maxDocumentID {
-		// 在极少数情况下，需要对结果做重排序
-		needSort = true
-	}
-	index.maxDocumentID = documentID
-
 	for key, locations := range *cache {
 		// 仅对 index cache 添加 key frequency
 		if !isSymbol {
@@ -261,47 +251,16 @@ func (index *NgramIndex) addCacheToIndex(documentID uint64, cache *map[IndexKey]
 
 		index.totalIndexSize += uint64(len(*locations) * 4)
 
-		var documents *SortedKeyedDocuments
-		var ok bool
 		if !isSymbol {
-			documents, ok = index.indexMap[key]
+			index.indexMap.insert(key, KeyedDocument{
+				DocumentID:           documentID,
+				SortedStartLocations: *locations,
+			})
 		} else {
-			documents, ok = index.symbolIndexMap[key]
-		}
-
-		if !ok {
-			// key 不存在的情况
-			docs := SortedKeyedDocuments{
-				KeyedDocument{
-					DocumentID:           documentID,
-					SortedStartLocations: *locations,
-				},
-			}
-			if !isSymbol {
-				index.indexMap[key] = &docs
-			} else {
-				index.symbolIndexMap[key] = &docs
-			}
-			continue
-		}
-
-		documentsNeedSort := false
-		if needSort {
-			// 进一步检查是否真的需要重排序
-			if documentID < (*documents)[len(*documents)-1].DocumentID {
-				documentsNeedSort = true
-			}
-		}
-
-		*documents = append(*documents, KeyedDocument{
-			DocumentID:           documentID,
-			SortedStartLocations: *locations,
-		})
-
-		if documentsNeedSort {
-			// 极少触发，不应该对索引速度产生显著影响
-			index.sortTriggered++
-			sort.Sort(*documents)
+			index.symbolIndexMap.insert(key, KeyedDocument{
+				DocumentID:           documentID,
+				SortedStartLocations: *locations,
+			})
 		}
 	}
 }
@@ -380,14 +339,8 @@ func (index *NgramIndex) Close() {
 	for k := range index.keyFrequencies {
 		delete(index.keyFrequencies, k)
 	}
-	for k := range index.indexMap {
-		delete(index.indexMap, k)
-	}
-	for k := range index.symbolIndexMap {
-		delete(index.symbolIndexMap, k)
-	}
 
 	index.keyFrequencies = nil
-	index.indexMap = nil
-	index.symbolIndexMap = nil
+	index.indexMap.index = nil
+	index.symbolIndexMap.index = nil
 }

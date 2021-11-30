@@ -25,13 +25,13 @@ func TestIndexDocument(t *testing.T) {
 	}
 
 	locations := []LocsWithKey{}
-	for k, v := range index.indexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -59,13 +59,13 @@ func TestIndexShortDocument(t *testing.T) {
 	}
 
 	locations := []LocsWithKey{}
-	for k, v := range index.indexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -91,13 +91,13 @@ func TestIndexShortDocument(t *testing.T) {
 	}
 
 	locations = []LocsWithKey{}
-	for k, v := range index.indexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -123,13 +123,13 @@ func TestIndexShortDocument(t *testing.T) {
 	}
 
 	locations = []LocsWithKey{}
-	for k, v := range index.indexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 
@@ -184,13 +184,13 @@ func TestIndexCTags(t *testing.T) {
 	}
 
 	locations := []LocsWithKey{}
-	for k, v := range index.symbolIndexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 	sort.Sort(SortLocsWithKey(locations))
@@ -224,13 +224,13 @@ func TestIndexSkip(t *testing.T) {
 	}
 
 	locations := []LocsWithKey{}
-	for k, v := range index.symbolIndexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 	sort.Sort(SortLocsWithKey(locations))
@@ -268,13 +268,13 @@ func TestIndexCTagsMismatch(t *testing.T) {
 	}
 
 	locations := []LocsWithKey{}
-	for k, v := range index.symbolIndexMap {
-		if len(*v) > 1 {
+	for _, v := range index.indexMap.index {
+		if len(*v.documents) > 1 {
 			logger.Fatal(err)
 		}
 		locations = append(locations, LocsWithKey{
-			Key:       k,
-			Locations: (*v)[0].SortedStartLocations,
+			Key:       v.key,
+			Locations: (*v.documents)[0].SortedStartLocations,
 		})
 	}
 	sort.Sort(SortLocsWithKey(locations))
