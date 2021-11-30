@@ -33,7 +33,11 @@ func TestSearchDocument(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), nil)
+	err := index.IndexDocument(DocumentData{
+		DocumentID:    1,
+		Content:       []byte(content),
+		SymbolEntries: nil,
+	})
 
 	if err != nil {
 		logger.Fatal(err)
@@ -96,7 +100,11 @@ func TestSearchOneKey(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), nil)
+	err := index.IndexDocument(DocumentData{
+		DocumentID:    1,
+		Content:       []byte(content),
+		SymbolEntries: nil,
+	})
 
 	if err != nil {
 		logger.Fatal(err)
@@ -159,7 +167,11 @@ func TestSearchShortKey(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), nil)
+	err := index.IndexDocument(DocumentData{
+		DocumentID:    1,
+		Content:       []byte(content),
+		SymbolEntries: nil,
+	})
 
 	if err != nil {
 		logger.Fatal(err)
@@ -235,7 +247,11 @@ func TestSearchUnderscore(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), nil)
+	err := index.IndexDocument(DocumentData{
+		DocumentID:    1,
+		Content:       []byte(content),
+		SymbolEntries: nil,
+	})
 
 	if err != nil {
 		logger.Fatal(err)
@@ -260,7 +276,11 @@ func TestSearchTwoKeyws(t *testing.T) {
 
 	index := NewNgramIndex()
 
-	err := index.IndexDocument(1, []byte(content), nil)
+	err := index.IndexDocument(DocumentData{
+		DocumentID:    1,
+		Content:       []byte(content),
+		SymbolEntries: nil,
+	})
 
 	if err != nil {
 		logger.Fatal(err)

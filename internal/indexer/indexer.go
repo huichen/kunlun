@@ -9,6 +9,8 @@ import (
 )
 
 type Indexer struct {
+	options *types.IndexerOptions
+
 	// 读写锁保证线程安全
 	indexerLock sync.RWMutex
 
@@ -76,6 +78,7 @@ func NewIndexer(options *types.IndexerOptions) *Indexer {
 	}
 
 	indexer := Indexer{
+		options:              options,
 		contentNgramIndices:  contentIndices,
 		numIndexerShards:     options.NumIndexerShards,
 		maxDocsPerShard:      options.MaxDocsPerShard,

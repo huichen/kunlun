@@ -73,7 +73,21 @@ func NewNgramIndex() *NgramIndex {
 	}
 }
 
-func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entries []*common_types.CTagsEntry) error {
+type DocumentData struct {
+	DocumentID       uint64
+	Content          []byte
+	SymbolEntries    []*common_types.CTagsEntry
+	SkipIndexUnigram bool
+	SkipIndexBigram  bool
+}
+
+func (index *NgramIndex) IndexDocument(
+	data DocumentData) error {
+
+	documentID := data.DocumentID
+	content := data.Content
+	entries := data.SymbolEntries
+
 	// 临时缓存，从文档中获得后一次性加入索引
 	indexCache := make(map[IndexKey]*[]uint32)
 	symbolIndexCache := make(map[IndexKey]*[]uint32)
@@ -133,20 +147,33 @@ func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entrie
 
 		// 从 ngram 得到反向索引的 key
 		key := RuneNgramToIndexKey(ngram)
-		keyBigram := RuneBigramToIndexKey(ngram)
-		keyUnigram := RuneUnigramToIndexKey(ngram)
+		var keyBigram, keyUnigram IndexKey
+		if !data.SkipIndexBigram {
+			keyBigram = RuneBigramToIndexKey(ngram)
+		}
+		if !data.SkipIndexUnigram {
+			keyUnigram = RuneUnigramToIndexKey(ngram)
+		}
 
 		// 将 key -> (docID, location) 加入索引
 		addIndexToCache(key, startLocation, &indexCache)
-		addIndexToCache(keyBigram, startLocation, &indexCache)
-		addIndexToCache(keyUnigram, startLocation, &indexCache)
+		if !data.SkipIndexBigram {
+			addIndexToCache(keyBigram, startLocation, &indexCache)
+		}
+		if !data.SkipIndexUnigram {
+			addIndexToCache(keyUnigram, startLocation, &indexCache)
+		}
 		if entries != nil && !stopAddingSymbolIndex && addSymbolIndex {
 			entryLocation := startLocation - uint32(lineStart) - uint32(entryInLine)
-			if ngramSize[0]+int(entryLocation) <= symbolLength {
-				addIndexToCache(keyUnigram, startLocation, &symbolIndexCache)
+			if !data.SkipIndexUnigram {
+				if ngramSize[0]+int(entryLocation) <= symbolLength {
+					addIndexToCache(keyUnigram, startLocation, &symbolIndexCache)
+				}
 			}
-			if ngramSize[0]+ngramSize[1]+int(entryLocation) <= symbolLength {
-				addIndexToCache(keyBigram, startLocation, &symbolIndexCache)
+			if !data.SkipIndexBigram {
+				if ngramSize[0]+ngramSize[1]+int(entryLocation) <= symbolLength {
+					addIndexToCache(keyBigram, startLocation, &symbolIndexCache)
+				}
 			}
 			if ngramSize[0]+ngramSize[1]+ngramSize[2]+int(entryLocation) <= symbolLength {
 				addIndexToCache(key, startLocation, &symbolIndexCache)
@@ -157,16 +184,20 @@ func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entrie
 	}
 
 	// 处理剩余的 ngram
+	var keyBigram, keyUnigram IndexKey
 	for i := 0; i < 2; i++ {
 		ngram[0], ngram[1], ngram[2] = ngram[1], ngram[2], 0
 		ngramSize[0], ngramSize[1], ngramSize[2] = ngramSize[1], ngramSize[2], 0
 		if ngram[0] != 0 {
-			keyUnigram := RuneUnigramToIndexKey(ngram)
-			addIndexToCache(keyUnigram, startLocation, &indexCache)
-
-			if ngram[1] != 0 {
-				keyBigram := RuneBigramToIndexKey(ngram)
-				addIndexToCache(keyBigram, startLocation, &indexCache)
+			if !data.SkipIndexUnigram {
+				keyUnigram = RuneUnigramToIndexKey(ngram)
+				addIndexToCache(keyUnigram, startLocation, &indexCache)
+			}
+			if !data.SkipIndexBigram {
+				if ngram[1] != 0 {
+					keyBigram = RuneBigramToIndexKey(ngram)
+					addIndexToCache(keyBigram, startLocation, &indexCache)
+				}
 			}
 
 			// 对 symbol 做处理
@@ -180,13 +211,17 @@ func (index *NgramIndex) IndexDocument(documentID uint64, content []byte, entrie
 
 				if entries != nil && !stopAddingSymbolIndex && addSymbolIndex {
 					entryLocation := startLocation - uint32(lineStart) - uint32(entryInLine)
-					if ngramSize[0]+int(entryLocation) <= symbolLength {
-						addIndexToCache(keyUnigram, startLocation, &symbolIndexCache)
+					if !data.SkipIndexUnigram {
+						if ngramSize[0]+int(entryLocation) <= symbolLength {
+							addIndexToCache(keyUnigram, startLocation, &symbolIndexCache)
+						}
 					}
-					if ngram[1] != 0 {
-						keyBigram := RuneBigramToIndexKey(ngram)
-						if ngramSize[0]+ngramSize[1]+int(entryLocation) <= symbolLength {
-							addIndexToCache(keyBigram, startLocation, &symbolIndexCache)
+					if !data.SkipIndexBigram {
+						if ngram[1] != 0 {
+							keyBigram := RuneBigramToIndexKey(ngram)
+							if ngramSize[0]+ngramSize[1]+int(entryLocation) <= symbolLength {
+								addIndexToCache(keyBigram, startLocation, &symbolIndexCache)
+							}
 						}
 					}
 				}
@@ -342,6 +377,16 @@ continuePoint:
 }
 
 func (index *NgramIndex) Close() {
+	for k := range index.keyFrequencies {
+		delete(index.keyFrequencies, k)
+	}
+	for k := range index.indexMap {
+		delete(index.indexMap, k)
+	}
+	for k := range index.symbolIndexMap {
+		delete(index.symbolIndexMap, k)
+	}
+
 	index.keyFrequencies = nil
 	index.indexMap = nil
 	index.symbolIndexMap = nil

@@ -11,6 +11,7 @@ import (
 // 从 token 得到两个搜索键和他们的距离，这两个搜索键是所有搜索键中频率最低的
 // 如果 token 包含小于三个 rune，则返回一个搜索键（第二个为 0)
 // 返回的第一个参数为 key1 在 token 中的起始位置
+// 如果没有找到，则返回 0, 0, 0, 0
 func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.IndexKey, ngram_index.IndexKey, uint32) {
 	lowerCaseKeyword := []byte(strings.ToLower(token))
 	runes := ngram_index.DecodeRunes(lowerCaseKeyword)
@@ -28,10 +29,13 @@ func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.I
 				Start: iStart,
 				End:   iStart,
 			}
-			keys = append(keys, keyWithFrequency{
-				Key:  key,
-				Freq: indexer.getKeyFrequency(key),
-			})
+			freq, found := indexer.getKeyFrequency(key)
+			if found {
+				keys = append(keys, keyWithFrequency{
+					Key:  key,
+					Freq: freq,
+				})
+			}
 		} else {
 			r := keyMap[key]
 			keyMap[key] = Range{
@@ -44,16 +48,19 @@ func (indexer *Indexer) getTwoKeysFromToken(token string) (uint32, ngram_index.I
 		runes = runes[1:]
 	}
 
-	sort.SliceStable(keys, func(i, j int) bool {
-		return keys[i].Freq < keys[j].Freq
-	})
-
+	// 特殊情况处理
 	if len(keys) == 0 {
 		return 0, 0, 0, 0
 	} else if len(keys) == 1 {
 		return keyMap[keys[0].Key].Start, keys[0].Key, 0, 0
 	}
 
+	// 按照词频排序
+	sort.SliceStable(keys, func(i, j int) bool {
+		return keys[i].Freq < keys[j].Freq
+	})
+
+	// 频率最低的两个词按照起始位置前后捋顺
 	i := 0
 	j := 1
 	if keyMap[keys[i].Key].Start > keyMap[keys[j].Key].Start {

@@ -1,14 +1,15 @@
 package ngram_index
 
-func (index *NgramIndex) GetKeyFrequency(key IndexKey) uint64 {
+// 第二个参数返回 key 是否存在于索引中
+func (index *NgramIndex) GetKeyFrequency(key IndexKey) (uint64, bool) {
 	index.indexLock.RLock()
 	defer index.indexLock.RUnlock()
 
 	if v, ok := index.keyFrequencies[key]; ok {
-		return v
+		return v, ok
 	}
 
-	return 0
+	return 0, false
 }
 
 func (index *NgramIndex) GetTotalIndexSize() uint64 {

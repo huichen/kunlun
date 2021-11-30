@@ -29,6 +29,7 @@ func (indexer *Indexer) searchMultiTokens(
 
 	// 首先得到所有 token 的搜索结果
 	tokenSearchResults := []*[]common_types.DocumentWithSections{}
+	var err error
 	for _, token := range tokens {
 		request := SearchTokenRequest{
 			Token:         token,
@@ -36,11 +37,16 @@ func (indexer *Indexer) searchMultiTokens(
 			CaseSensitive: caseSensitive,
 			DocFilter:     shouldDocBeRecalled,
 		}
-		resp, err := indexer.SearchToken(request)
-		if err != nil {
-			return nil, err
+		resp, searchErr := indexer.SearchToken(request)
+		if searchErr == nil {
+			tokenSearchResults = append(tokenSearchResults, &resp)
+		} else {
+			err = searchErr
 		}
-		tokenSearchResults = append(tokenSearchResults, &resp)
+	}
+	if len(tokenSearchResults) == 0 && err != nil {
+		// 当所有的 token 都返回错误时，返回错误，上游会忽略多 token 的搜索结果
+		return nil, err
 	}
 
 	return indexer.mergeResults(tokenSearchResults)

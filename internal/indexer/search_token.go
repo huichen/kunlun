@@ -1,6 +1,10 @@
 package indexer
 
-import "github.com/huichen/kunlun/internal/common_types"
+import (
+	"errors"
+
+	"github.com/huichen/kunlun/internal/common_types"
+)
 
 const (
 	Atoa = 32
@@ -37,7 +41,7 @@ func (indexer *Indexer) internalSearchToken(request SearchTokenRequest) ([]commo
 	// 获取 keyword 对应的 index keys，distance 等信息
 	offset, key1, key2, distance := indexer.getTwoKeysFromToken(request.Token)
 	if key1 == 0 {
-		return nil, nil
+		return nil, errors.New("搜索关键词太短，请重试")
 	}
 
 	// 搜索文档内容

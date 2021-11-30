@@ -60,6 +60,7 @@ func NewIndexWalkerOptions() *IndexWalkerOptions {
 		IgnoreDirs:               make(map[string]bool),
 		FilterDotPrefix:          true,
 		NumFileProcessors:        runtime.NumCPU() * 2,
+		AllowedRepoRemoteURLs:    make(map[string]bool),
 	}
 }
 
@@ -166,5 +167,10 @@ func (options *IndexWalkerOptions) SetCTagsParserOptions(opt *CTagsParserOptions
 	if opt.BinaryPath != "" {
 		options.CTagsParserOptions = opt
 	}
+	return options
+}
+
+func (options *IndexWalkerOptions) SetAllowedRepoRemoteURLs(urls map[string]bool) *IndexWalkerOptions {
+	options.AllowedRepoRemoteURLs = urls
 	return options
 }

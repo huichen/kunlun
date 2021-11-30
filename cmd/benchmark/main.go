@@ -26,6 +26,7 @@ var (
 	ctags             = flag.String("ctags", "", "ctags 二进制文件地址")
 	maxFileSize       = flag.Int("size", 0, "最大文件尺寸")
 	indexShards       = flag.Int("shards", 0, "检索器分片，设置为 0 则使用全部 CPU")
+	skipBiAndUnigram  = flag.Bool("skip_gram", false, "是否忽略索引 bigram 和 unigram")
 
 	// 搜索参数
 	query = flag.String("q", "gcc", "待搜索的关键词")
@@ -75,7 +76,9 @@ func main() {
 
 	// 索引器选项
 	indexerOptions := types.NewIndexerOptions().
-		SetNumIndexerShards(*indexShards)
+		SetNumIndexerShards(*indexShards).
+		SetSkipIndexBigram(*skipBiAndUnigram).
+		SetSkipIndexUnigram(*skipBiAndUnigram)
 
 	// 搜索引擎
 	engineOptions := types.NewEngineOptions().

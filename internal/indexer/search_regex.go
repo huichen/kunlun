@@ -111,8 +111,11 @@ func (indexer *Indexer) internalSearchRegex(request SearchRegexRequest) ([]commo
 		} else {
 			// 如果出错的话就不用
 			matchedDocs = nil
+			docIDs = indexer.documentIDs
 		}
 	}
+
+	// 候选文档集不为空的情况
 	if request.CandidateDocs != nil && len(*request.CandidateDocs) != 0 && !request.CandidateDocsNegate {
 		if runSearch {
 			// 如果做了检索，则取交集

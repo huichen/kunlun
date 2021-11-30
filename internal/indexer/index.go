@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/huichen/kunlun/internal/common_types"
+	"github.com/huichen/kunlun/internal/ngram_index"
 	"github.com/huichen/kunlun/pkg/log"
 )
 
@@ -112,7 +113,14 @@ func (indexer *Indexer) contentIndexWorker(shard int) {
 			return
 		}
 
-		err := indexer.contentNgramIndices[shard].IndexDocument(info.DocID, info.Content, info.CTagsEntries)
+		err := indexer.contentNgramIndices[shard].IndexDocument(
+			ngram_index.DocumentData{
+				DocumentID:       info.DocID,
+				Content:          info.Content,
+				SymbolEntries:    info.CTagsEntries,
+				SkipIndexUnigram: indexer.options.SkipIndexUnigram,
+				SkipIndexBigram:  indexer.options.SkipIndexBigram,
+			})
 
 		// 更新计数
 		indexer.indexerLock.Lock()

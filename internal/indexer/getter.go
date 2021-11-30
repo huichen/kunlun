@@ -18,11 +18,15 @@ func (indexer *Indexer) GetContent(docID uint64) []byte {
 }
 
 // 获得 ngram index key 在文档中出现的频率（文档个数）
-func (indexer *Indexer) getKeyFrequency(key ngram_index.IndexKey) uint64 {
+func (indexer *Indexer) getKeyFrequency(key ngram_index.IndexKey) (uint64, bool) {
 	freq := uint64(0)
+	found := false
 	for i := 0; i < indexer.numIndexerShards; i++ {
-		freq += indexer.contentNgramIndices[i].GetKeyFrequency(key)
+		if v, ok := indexer.contentNgramIndices[i].GetKeyFrequency(key); ok {
+			found = true
+			freq += v
+		}
 	}
 
-	return freq
+	return freq, found
 }
